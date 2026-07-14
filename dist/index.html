@@ -34,25 +34,25 @@ body{
 .header h1::after{content:'';position:absolute;bottom:-2px;left:10%;width:80%;height:2px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.4),transparent);border-radius:2px}
 @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .header-meta{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
-.header .badge{display:inline-block;padding:4px 14px;font-size:12px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-full);letter-spacing:0.3px}
-.header .update-date{font-size:11px;color:var(--muted);opacity:0.5}
-.header .ver{display:block;margin-top:8px;font-size:13px;color:var(--muted);letter-spacing:0.5px}
+.header .badge{display:inline-block;padding:4px 14px;font-size:0.75rem;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-full);letter-spacing:0.3px}
+.header .update-date{font-size:0.688rem;color:var(--muted);opacity:0.5}
+.header .ver{display:block;margin-top:8px;font-size:0.812rem;color:var(--muted);letter-spacing:0.5px}
 
 .consent-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 16px;margin-bottom:20px;position:relative}
 .consent-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);border-radius:var(--radius) var(--radius) 0 0}
-.consent-box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:6px}
+.consent-box p{font-size:0.812rem;color:var(--muted);line-height:1.7;margin-bottom:6px}
 .consent-box p strong{color:#c4b5fd}
-.consent-box .rule-line{margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--muted);line-height:1.6;border-left:2.5px solid var(--amber)}
+.consent-box .rule-line{margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:8px;font-size:0.75rem;color:var(--muted);line-height:1.6;border-left:2.5px solid var(--amber)}
 .consent-box .rule-line strong{color:var(--amber)}
-.consent-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text);margin-top:12px;padding:4px 0}
+.consent-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.812rem;color:var(--text);margin-top:12px;padding:4px 0}
 .consent-label input[type=checkbox]{width:16px;height:16px;accent-color:var(--brand);cursor:pointer}
 
 .section{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.section-label{font-size:15px;font-weight:700}
-.section-hint{font-size:12px;color:var(--muted)}
+.section-label{font-size:0.938rem;font-weight:700}
+.section-hint{font-size:0.75rem;color:var(--muted)}
 
 .filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.filter-chip{padding:5px 14px;border-radius:var(--radius-full);font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all 0.2s ease;font-family:inherit}
+.filter-chip{padding:5px 14px;border-radius:var(--radius-full);font-size:0.75rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all 0.2s ease;font-family:inherit}
 .filter-chip:hover{border-color:var(--muted);color:var(--text)}
 .filter-chip.active{border-color:var(--brand);background:rgba(139,92,246,0.12);color:#c4b5fd;box-shadow:0 0 12px rgba(139,92,246,0.15)}
 .filter-chip.all{color:var(--text)}
@@ -63,8 +63,8 @@ body{
 .char-card:active{transform:scale(0.94)}
 .char-card .avatar-wrap{width:48px;height:48px;margin:0 auto 4px;border-radius:50%;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;transition:all 0.2s}
 .char-card .avatar-wrap img{width:100%;height:100%;object-fit:cover}
-.char-card .name{font-size:12px;font-weight:700;color:var(--text);line-height:1.2}
-.char-card .tag{display:inline-block;font-size:9px;padding:2px 6px;border-radius:4px;margin-top:3px;font-weight:700;letter-spacing:0.3px}
+.char-card .name{font-size:0.75rem;font-weight:700;color:var(--text);line-height:1.2}
+.char-card .tag{display:inline-block;font-size:0.562rem;padding:2px 6px;border-radius:4px;margin-top:3px;font-weight:700;letter-spacing:0.3px}
 .tag-atk{background:rgba(239,68,68,0.12);color:#f87171}
 .tag-stun{background:rgba(59,130,246,0.12);color:#60a5fa}
 .tag-ano{background:rgba(168,85,247,0.12);color:#c084fc}
@@ -73,12 +73,12 @@ body{
 .char-card.selected{border-color:var(--brand);background:rgba(139,92,246,0.08);box-shadow:0 0 20px var(--brand-glow),inset 0 0 20px rgba(139,92,246,0.04);transform:translateY(-1px)}
 .char-card.selected .name{color:#c4b5fd}
 .char-card.selected .avatar-wrap{box-shadow:0 0 12px var(--brand-glow)}
-.char-card .count{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--brand-dim),var(--brand));color:#fff;font-size:11px;font-weight:800;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px var(--brand-glow);z-index:2}
+.char-card .count{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--brand-dim),var(--brand));color:#fff;font-size:0.688rem;font-weight:800;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px var(--brand-glow);z-index:2}
 .char-card.selected .count{display:flex}
-.char-card .star{color:var(--amber);font-size:11px;margin-right:1px}
+.char-card .star{color:var(--amber);font-size:0.688rem;margin-right:1px}
 
 .btn-area{margin-bottom:16px}
-.analyze-btn{width:100%;padding:15px;border:none;border-radius:var(--radius-sm);font-size:16px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--brand-dim),var(--brand));box-shadow:0 4px 24px rgba(139,92,246,0.3);letter-spacing:0.5px;position:relative;overflow:hidden}
+.analyze-btn{width:100%;padding:15px;border:none;border-radius:var(--radius-sm);font-size:1.0rem;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--brand-dim),var(--brand));box-shadow:0 4px 24px rgba(139,92,246,0.3);letter-spacing:0.5px;position:relative;overflow:hidden}
 .analyze-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);transition:left 0.5s}
 .analyze-btn:hover::after{left:100%}
 .analyze-btn:active{transform:scale(0.97);opacity:0.9}
@@ -86,27 +86,27 @@ body{
 .analyze-btn:disabled::after{display:none}
 
 .quick-btns{display:flex;gap:8px;margin-bottom:14px}
-.quick-btn{flex:1;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;text-align:center}
+.quick-btn{flex:1;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font-size:0.75rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;text-align:center}
 .quick-btn:hover{border-color:var(--muted);color:var(--text);background:var(--surface2)}
 
-.reset-btn{width:100%;padding:11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--muted);font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;margin-bottom:18px}
+.reset-btn{width:100%;padding:11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--muted);font-size:0.812rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;margin-bottom:18px}
 .reset-btn:hover{border-color:var(--muted);color:var(--text)}
 
 .dps-picker{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px;display:none}
 .dps-picker.show{display:block}
-.dps-picker .dp{font-size:14px;font-weight:700;color:#c4b5fd;margin-bottom:12px;line-height:1.5}
+.dps-picker .dp{font-size:0.875rem;font-weight:700;color:#c4b5fd;margin-bottom:12px;line-height:1.5}
 .dps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .dps-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
 .dps-opt:hover{border-color:rgba(139,92,246,0.3)}
 .dps-opt .dp-img{width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--surface2);transition:all 0.2s}
 .dps-opt .dp-img img{width:100%;height:100%;object-fit:cover}
-.dps-opt .dp-name{font-size:13px;font-weight:600;color:var(--text)}
-.dps-opt .dp-tag{font-size:10px;color:var(--muted);margin-top:2px}
+.dps-opt .dp-name{font-size:0.812rem;font-weight:600;color:var(--text)}
+.dps-opt .dp-tag{font-size:0.625rem;color:var(--muted);margin-top:2px}
 .dps-opt.picked{opacity:0.5}
-.dps-opt.picked::after{content:'✓';position:absolute;top:3px;right:6px;font-size:15px;color:var(--brand);font-weight:800}
+.dps-opt.picked::after{content:'✓';position:absolute;top:3px;right:6px;font-size:0.938rem;color:var(--brand);font-weight:800}
 .dps-opt.locked{opacity:0.2;pointer-events:none}
 .dps-opt.locked::after{content:''}
-.confirm-dps{width:100%;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand-dim),var(--brand));margin-top:12px;letter-spacing:0.5px}
+.confirm-dps{width:100%;padding:13px;border:none;border-radius:10px;font-size:0.938rem;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand-dim),var(--brand));margin-top:12px;letter-spacing:0.5px}
 .confirm-dps:active{transform:scale(0.97)}
 .confirm-dps:disabled{opacity:0.2;cursor:not-allowed}
 
@@ -115,23 +115,23 @@ body{
 .team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;position:relative}
 .team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .team-card .th{padding:12px 16px;display:flex;align-items:center;gap:8px}
-.team-card .th .tn{font-size:15px;font-weight:700}
-.team-card .th .td{font-size:13px;color:var(--muted);margin-left:auto}
+.team-card .th .tn{font-size:0.938rem;font-weight:700}
+.team-card .th .td{font-size:0.812rem;color:var(--muted);margin-left:auto}
 .team-card .tb{padding:10px 14px 16px;display:flex;gap:10px;justify-content:center}
 .team-card .slot{flex:1;min-width:72px;max-width:130px;text-align:center;background:var(--surface2);border-radius:10px;padding:10px 4px;cursor:pointer;position:relative;transition:all 0.2s}
 .team-card .slot:hover{background:rgba(139,92,246,0.05)}
 .team-card .slot .si{width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--border);transition:all 0.2s}
 .team-card .slot .si img{width:100%;height:100%;object-fit:cover}
-.team-card .slot .sn{font-size:12px;font-weight:600;color:var(--text);line-height:1.2}
-.team-card .slot .sr{font-size:10px;color:var(--muted);margin-top:2px;display:inline-block;padding:1px 6px;border-radius:4px}
+.team-card .slot .sn{font-size:0.75rem;font-weight:600;color:var(--text);line-height:1.2}
+.team-card .slot .sr{font-size:0.625rem;color:var(--muted);margin-top:2px;display:inline-block;padding:1px 6px;border-radius:4px}
 .team-card .slot.main .si{border:2.5px solid var(--amber);box-shadow:0 0 12px rgba(245,158,11,0.25)}
 .team-card .slot.main .sn{color:var(--amber);font-weight:700}
 .team-card .slot.main .sr{color:var(--amber);font-weight:700;background:rgba(245,158,11,0.08)}
 .team-card .slot.swapable{border:1.5px dashed rgba(139,92,246,0.2)}
-.team-card .slot.swapable::after{content:'⇄';position:absolute;top:-7px;right:-5px;font-size:13px;color:var(--brand);font-weight:800;text-shadow:0 0 8px rgba(139,92,246,0.4)}
+.team-card .slot.swapable::after{content:'⇄';position:absolute;top:-7px;right:-5px;font-size:0.812rem;color:var(--brand);font-weight:800;text-shadow:0 0 8px rgba(139,92,246,0.4)}
 .team-card .slot.empty{opacity:0.35}
 .team-card .slot.note{background:var(--amber-bg);border-color:rgba(245,158,11,0.2);cursor:default}
-.team-card .slot.note .sn{color:var(--amber);font-size:11px}
+.team-card .slot.note .sn{color:var(--amber);font-size:0.688rem}
 
 .t-green::before{background:linear-gradient(90deg,var(--green),rgba(34,197,94,0.3))}
 .t-green .th{background:var(--green-bg)}
@@ -144,28 +144,28 @@ body{
 .t-purple .tn{color:#c4b5fd}
 
 .summary-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
-.summary-card .s-title{font-size:15px;font-weight:700;color:var(--brand);margin-bottom:6px}
-.summary-card .s-text{font-size:13px;color:var(--muted);line-height:1.7}
+.summary-card .s-title{font-size:0.938rem;font-weight:700;color:var(--brand);margin-bottom:6px}
+.summary-card .s-text{font-size:0.812rem;color:var(--muted);line-height:1.7}
 .suggestion{background:var(--amber-bg);border:1px solid rgba(245,158,11,0.15);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
-.suggestion .s-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:4px}
-.suggestion .s-text{font-size:12px;color:var(--muted);line-height:1.6}
+.suggestion .s-title{font-size:0.812rem;font-weight:700;color:var(--amber);margin-bottom:4px}
+.suggestion .s-text{font-size:0.75rem;color:var(--muted);line-height:1.6}
 
 .swap-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;padding:24px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .swap-overlay.show{display:flex}
 .swap-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;width:100%;max-width:360px;max-height:75vh;overflow-y:auto}
-.swap-panel .sp{font-size:15px;font-weight:700;color:#c4b5fd;margin-bottom:4px}
+.swap-panel .sp{font-size:0.938rem;font-weight:700;color:#c4b5fd;margin-bottom:4px}
 .swap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
 .swap-opt{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.15s}
 .swap-opt:hover{border-color:rgba(139,92,246,0.3)}
 .swap-opt .swi{width:38px;height:38px;border-radius:50%;overflow:hidden;margin:0 auto 3px;background:var(--surface2)}
 .swap-opt .swi img{width:100%;height:100%;object-fit:cover}
-.swap-opt .swn{font-size:12px;font-weight:600;color:var(--text)}
-.swap-opt .swr{font-size:10px;color:var(--muted);margin-top:1px}
+.swap-opt .swn{font-size:0.75rem;font-weight:600;color:var(--text)}
+.swap-opt .swr{font-size:0.625rem;color:var(--muted);margin-top:1px}
 
-.footer{text-align:center;font-size:12px;color:var(--muted);padding:16px 0;line-height:1.8}
+.footer{text-align:center;font-size:0.75rem;color:var(--muted);padding:16px 0;line-height:1.8}
 .footer a{color:var(--brand);text-decoration:none;transition:opacity 0.2s}
 .footer a:hover{opacity:0.8}
-.footer .disclaimer{margin-top:8px;font-size:11px;color:var(--muted);opacity:0.5}
+.footer .disclaimer{margin-top:8px;font-size:0.688rem;color:var(--muted);opacity:0.5}
 
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
@@ -174,10 +174,10 @@ body{
 }
 /* 手机端整体放大 */
 @media(max-width:480px){
-  html{font-size:20px}
+  html{font-size:1.25rem}
 }
 @media(min-width:481px){
-  html{font-size:16px}
+  html{font-size:1.0rem}
 }
 </style>
 </head>
@@ -197,7 +197,7 @@ body{
   </div>
 
   <div class="consent-box">
-    <p style="font-size:12px;color:var(--amber);margin-bottom:4px">⚠️ 老角色实在安排不过来，只做了一部分能和3.0版本角色挂钩的限定角色。1.x回归玩家尽量不要问为什么没有XXX角色，问就是连口汤都没，被策划生生地饿死了。作者抽个二命简就是为了一直喝汤，现在突然不让喝，蕾米埃尔队里的简是个白板角色，耀变无法暴击，简的核心被动直接跟没有一样，21简不如01爱芮，真金白银的花了钱不如别人两金，真该骂膨胀了。<br>顺带一提，简的加强的提升率看着挺唬人实则仅5%提升，悠真都有10%。</p>
+    <p style="font-size:0.75rem;color:var(--amber);margin-bottom:4px">⚠️ 老角色实在安排不过来，只做了一部分能和3.0版本角色挂钩的限定角色。1.x回归玩家尽量不要问为什么没有XXX角色，问就是连口汤都没，被策划生生地饿死了。作者抽个二命简就是为了一直喝汤，现在突然不让喝，蕾米埃尔队里的简是个白板角色，耀变无法暴击，简的核心被动直接跟没有一样，21简不如01爱芮，真金白银的花了钱不如别人两金，真该骂膨胀了。<br>顺带一提，简的加强的提升率看着挺唬人实则仅5%提升，悠真都有10%。</p>
     <p><strong>虹棱建议</strong></p>
     <p>先保证三队都有至少一个限定S角色，输出或击破都可以，推荐限定S击破是因为常驻的佩洛伊斯和猫又都能用。新手只建议00平铺。一定要考虑持有一个限定击破角色！</p>
     <div class="rule-line">
@@ -205,9 +205,9 @@ body{
     </div>
     <p><strong>推荐关注的输出角色：</strong>蕾米埃尔、希格莉德、维琳娜、佩洛伊斯、叶瞬光</p>
     <p><strong>推荐关注的击破角色：</strong>琉音、诺姆</p>
-    <p style="font-size:12px;color:var(--muted);margin-top:4px">⚠️ 简0命不建议玩，2命才能玩。0命简不如柏妮思、派派。绝区零美术骑着策划上班，端水一直端不平。你们喜欢的角色一定会被策划拿来拉踩的，除非只喜欢主推角色。3.0策划针对一个两年前的角色，策划牛逼。虚狩厨是对的，大大方方虚狩叙事。最尊重主推角色的二游。</p>
-    <p style="font-size:12px;color:var(--muted);margin-top:2px">关于简的待遇问题有助于新手理解本游戏该如何抽卡，你们说是吧，艾莲朱鸢青衣凯撒悠真。</p>
-     <p style="font-size:12px;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:4px">⚠️ 简0命不建议玩，2命才能玩。0命简不如柏妮思、派派。绝区零美术骑着策划上班，端水一直端不平。你们喜欢的角色一定会被策划拿来拉踩的，除非只喜欢主推角色。3.0策划针对一个两年前的角色，策划牛逼。虚狩厨是对的，大大方方虚狩叙事。最尊重主推角色的二游。</p>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">关于简的待遇问题有助于新手理解本游戏该如何抽卡，你们说是吧，艾莲朱鸢青衣凯撒悠真。</p>
+     <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
     <label class="consent-label">
         <input type="checkbox" id="consentCheck"> <span style="color:var(--red);font-weight:700;margin-right:2px">*</span> 我已经通读作者的建议
       </label>
@@ -226,7 +226,7 @@ body{
   <div class="char-grid" id="charGrid"></div>
 
   <div class="dps-picker" id="dpsPicker">
-    <div class="dp">👑 选3个主C（从你选的强攻/异常角色中选）<br><span style="font-size:11px;color:var(--muted);font-weight:400">⚠️ 简0命不行，2命才能玩，新手不要选</span></div>
+    <div class="dp">👑 选3个主C（从你选的强攻/异常角色中选）<br><span style="font-size:0.688rem;color:var(--muted);font-weight:400">⚠️ 简0命不行，2命才能玩，新手不要选</span></div>
     <div class="dps-grid" id="dpsGrid"></div>
     <button class="confirm-dps" id="confirmDps" disabled>确认生成配队</button>
     <div style="text-align:center;margin-top:10px"><button class="quick-btn" id="cancelDps" style="display:inline;width:auto;padding:4px 16px;margin:0">取消</button></div>
@@ -249,7 +249,7 @@ body{
 <div class="swap-overlay" id="swapOverlay">
   <div class="swap-panel">
     <div class="sp" id="swapTitle">选择队友</div>
-    <div style="text-align:right;margin-top:2px"><button style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;font-family:inherit;opacity:0.6" id="swapCloseBtn">✕ 关闭</button></div>
+    <div style="text-align:right;margin-top:2px"><button style="background:none;border:none;color:var(--muted);font-size:0.812rem;cursor:pointer;font-family:inherit;opacity:0.6" id="swapCloseBtn">✕ 关闭</button></div>
     <div class="swap-grid" id="swapGrid"></div>
   </div>
 </div>
@@ -496,8 +496,8 @@ function renderTeams(teams){
     const c=colors[i]||"amber";
     html+=`<div class="team-card t-${c}"><div class="th"><span class="tn">${labels[i]}</span><span class="td">${icons[i]}</span></div><div class="tb">`;
     t.slots.forEach((s,j)=>{
-      if(!s){html+=`<div class="slot empty"><div class="si" style="display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--muted)">?</div><div class="sn">缺人</div></div>`;return;}
-      if(s.note){html+=`<div class="slot note"><div class="si" style="background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--amber)">!</div><div class="sn">缺异常</div><span class="sr" style="font-size:9px;color:var(--amber)">蕾米需2异常</span></div>`;return;}
+      if(!s){html+=`<div class="slot empty"><div class="si" style="display:flex;align-items:center;justify-content:center;font-size:1.312rem;color:var(--muted)">?</div><div class="sn">缺人</div></div>`;return;}
+      if(s.note){html+=`<div class="slot note"><div class="si" style="background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:1.312rem;color:var(--amber)">!</div><div class="sn">缺异常</div><span class="sr" style="font-size:0.562rem;color:var(--amber)">蕾米需2异常</span></div>`;return;}
       const info=allChars.find(x=>x.id===s.id);
       const rt=roleTags[info?info.role:""]||"";
       const mc=s.main?"main":"";const sc=s.main?"":"swapable";
