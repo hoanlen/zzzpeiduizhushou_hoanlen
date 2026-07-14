@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -11,127 +11,170 @@
   --bg:#0a0910;--surface:#13111c;--surface2:#1c1930;--border:#2a2550;
   --text:#e8e6f0;--muted:#7a7598;--brand:#8b5cf6;--brand-dim:#6d3fd1;
   --brand-glow:rgba(139,92,246,0.35);
-  --green:#22c55e;--green-bg:rgba(34,197,94,0.1);
-  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.1);
-  --red:#ef4444;--red-bg:rgba(239,68,68,0.1);--blue:#60a5fa;--radius:14px;--radius-sm:10px;--radius-full:9999px;
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.08);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.08);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.08);--blue:#60a5fa;--radius:14px;--radius-sm:10px;--radius-full:9999px;
 }
-body{font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-.container{max-width:480px;margin:0 auto;padding:16px 14px 40px}
-.header{text-align:center;padding:24px 0 14px;position:relative}
-.header h1{font-size:20px;font-weight:800;background:linear-gradient(135deg,#c4b5fd,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.header .badge{display:inline-block;margin-top:5px;padding:3px 12px;font-size:10px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-full)}
-.header .ver{display:block;margin-top:4px;font-size:10px;color:var(--muted)}
+body{
+  font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+body::before{
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(rgba(10,9,16,0.72),rgba(10,9,16,0.78)),url('./assets/bg.png');
+  background-size:cover;
+  background-position:center 30%;
+  background-repeat:no-repeat;
+  pointer-events:none;z-index:0;
+}
+.container{max-width:480px;margin:0 auto;padding:16px 14px 40px;position:relative;z-index:1}
 
-.consent-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:16px}
-.consent-box p{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:8px}
+.header{text-align:center;padding:32px 0 18px;position:relative;overflow:hidden}
+.header-bg{position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:320px;height:320px;background:radial-gradient(circle,rgba(139,92,246,0.12) 0%,rgba(139,92,246,0.04) 35%,transparent 65%);pointer-events:none;border-radius:50%}
+.header-content{position:relative;z-index:1}
+.header h1{font-size:24px;font-weight:800;background:linear-gradient(135deg,#c4b5fd,#8b5cf6,#6d28d9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-size:200% 200%;animation:gradientShift 4s ease infinite;letter-spacing:-0.5px;position:relative;display:inline-block}
+.header h1::after{content:'';position:absolute;bottom:-2px;left:10%;width:80%;height:2px;background:linear-gradient(90deg,transparent,rgba(139,92,246,0.4),transparent);border-radius:2px}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header-meta{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.header .badge{display:inline-block;padding:4px 14px;font-size:10px;font-weight:600;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-full);letter-spacing:0.3px}
+.header .update-date{font-size:9px;color:var(--muted);opacity:0.5}
+.header .ver{display:block;margin-top:8px;font-size:11px;color:var(--muted);letter-spacing:0.5px}
+
+.consent-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 16px;margin-bottom:20px;position:relative}
+.consent-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);border-radius:var(--radius) var(--radius) 0 0}
+.consent-box p{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:6px}
 .consent-box p strong{color:#c4b5fd}
-.consent-box .rule-line{margin-top:6px;padding:6px 8px;background:var(--surface2);border-radius:6px;font-size:10px;color:var(--muted);line-height:1.6}
+.consent-box .rule-line{margin-top:8px;padding:8px 10px;background:var(--surface2);border-radius:8px;font-size:10px;color:var(--muted);line-height:1.6;border-left:2.5px solid var(--amber)}
 .consent-box .rule-line strong{color:var(--amber)}
-.consent-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text);margin-top:10px}
+.consent-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;color:var(--text);margin-top:12px;padding:4px 0}
 .consent-label input[type=checkbox]{width:16px;height:16px;accent-color:var(--brand);cursor:pointer}
 
-.section{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.section-label{font-size:13px;font-weight:700}
+.section{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.section-label{font-size:14px;font-weight:700}
 .section-hint{font-size:10px;color:var(--muted)}
 
-.filter-bar{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.filter-chip{padding:4px 12px;border-radius:var(--radius-full);font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all 0.15s;font-family:inherit}
-.filter-chip.active{border-color:var(--brand);background:rgba(139,92,246,0.12);color:#c4b5fd}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filter-chip{padding:5px 14px;border-radius:var(--radius-full);font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);transition:all 0.2s ease;font-family:inherit}
+.filter-chip:hover{border-color:var(--muted);color:var(--text)}
+.filter-chip.active{border-color:var(--brand);background:rgba(139,92,246,0.12);color:#c4b5fd;box-shadow:0 0 12px rgba(139,92,246,0.15)}
 .filter-chip.all{color:var(--text)}
-.filter-chip.all.active{border-color:var(--brand);background:rgba(139,92,246,0.12)}
 
-.char-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px;min-height:60px}
-.char-card{position:relative;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:6px 2px 7px;text-align:center;cursor:pointer;transition:all 0.2s;user-select:none;-webkit-tap-highlight-color:transparent}
+.char-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.char-card{position:relative;background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 2px 9px;text-align:center;cursor:pointer;transition:all 0.2s cubic-bezier(0.4,0,0.2,1);user-select:none;-webkit-tap-highlight-color:transparent}
+.char-card:hover{border-color:rgba(139,92,246,0.3);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.2)}
 .char-card:active{transform:scale(0.94)}
-.char-card .avatar-wrap{width:46px;height:46px;margin:0 auto 3px;border-radius:50%;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center}
+.char-card .avatar-wrap{width:48px;height:48px;margin:0 auto 4px;border-radius:50%;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;transition:all 0.2s}
 .char-card .avatar-wrap img{width:100%;height:100%;object-fit:cover}
-.char-card .name{font-size:9px;font-weight:700;color:var(--text);line-height:1.2}
-.char-card .tag{display:inline-block;font-size:7px;padding:1px 5px;border-radius:4px;margin-top:2px;font-weight:600}
-.tag-atk{background:rgba(239,68,68,0.15);color:#f87171}
-.tag-stun{background:rgba(59,130,246,0.15);color:#60a5fa}
-.tag-ano{background:rgba(168,85,247,0.15);color:#c084fc}
-.tag-sup{background:rgba(34,197,94,0.15);color:#4ade80}
-.tag-def{background:rgba(245,158,11,0.15);color:#fbbf24}
-.char-card.selected{border-color:var(--brand);background:rgba(139,92,246,0.08);box-shadow:0 0 16px var(--brand-glow)}
+.char-card .name{font-size:10px;font-weight:700;color:var(--text);line-height:1.2}
+.char-card .tag{display:inline-block;font-size:7px;padding:2px 6px;border-radius:4px;margin-top:3px;font-weight:700;letter-spacing:0.3px}
+.tag-atk{background:rgba(239,68,68,0.12);color:#f87171}
+.tag-stun{background:rgba(59,130,246,0.12);color:#60a5fa}
+.tag-ano{background:rgba(168,85,247,0.12);color:#c084fc}
+.tag-sup{background:rgba(34,197,94,0.12);color:#4ade80}
+.tag-def{background:rgba(245,158,11,0.12);color:#fbbf24}
+.char-card.selected{border-color:var(--brand);background:rgba(139,92,246,0.08);box-shadow:0 0 20px var(--brand-glow),inset 0 0 20px rgba(139,92,246,0.04);transform:translateY(-1px)}
 .char-card.selected .name{color:#c4b5fd}
-.char-card.selected .avatar-wrap{box-shadow:0 0 10px var(--brand-glow)}
-.char-card .count{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:var(--brand);color:#fff;font-size:8px;font-weight:800;display:none;align-items:center;justify-content:center;box-shadow:0 0 10px var(--brand-glow);z-index:2}
+.char-card.selected .avatar-wrap{box-shadow:0 0 12px var(--brand-glow)}
+.char-card .count{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,var(--brand-dim),var(--brand));color:#fff;font-size:9px;font-weight:800;display:none;align-items:center;justify-content:center;box-shadow:0 0 12px var(--brand-glow);z-index:2}
 .char-card.selected .count{display:flex}
-.char-card.s-rank .name .star{color:var(--amber);font-size:8px;margin-right:1px}
+.char-card .star{color:var(--amber);font-size:9px;margin-right:1px}
 
-.btn-area{margin-bottom:14px}
-.analyze-btn{width:100%;padding:14px;border:none;border-radius:var(--radius-sm);font-size:14px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--brand-dim),var(--brand));box-shadow:0 4px 20px rgba(139,92,246,0.3)}
+.btn-area{margin-bottom:16px}
+.analyze-btn{width:100%;padding:15px;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,var(--brand-dim),var(--brand));box-shadow:0 4px 24px rgba(139,92,246,0.3);letter-spacing:0.5px;position:relative;overflow:hidden}
+.analyze-btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.08),transparent);transition:left 0.5s}
+.analyze-btn:hover::after{left:100%}
 .analyze-btn:active{transform:scale(0.97);opacity:0.9}
-.analyze-btn:disabled{opacity:0.25;cursor:not-allowed;box-shadow:none}
+.analyze-btn:disabled{opacity:0.2;cursor:not-allowed;box-shadow:none}
+.analyze-btn:disabled::after{display:none}
 
-.reset-btn{width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--muted);font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;margin-bottom:16px}
+.quick-btns{display:flex;gap:8px;margin-bottom:14px}
+.quick-btn{flex:1;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font-size:10px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;text-align:center}
+.quick-btn:hover{border-color:var(--muted);color:var(--text);background:var(--surface2)}
+
+.reset-btn{width:100%;padding:11px;border:1px solid var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--muted);font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;margin-bottom:18px}
 .reset-btn:hover{border-color:var(--muted);color:var(--text)}
 
-.dps-picker{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px;display:none}
+.dps-picker{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px;display:none}
 .dps-picker.show{display:block}
-.dps-picker .dp{font-size:12px;font-weight:700;color:#c4b5fd;margin-bottom:10px}
+.dps-picker .dp{font-size:12px;font-weight:700;color:#c4b5fd;margin-bottom:12px;line-height:1.5}
 .dps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.dps-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:8px;text-align:center;cursor:pointer;transition:all 0.15s;position:relative}
-.dps-opt:active{transform:scale(0.95)}
-.dps-opt.selected{border-color:var(--brand);background:rgba(139,92,246,0.12);box-shadow:0 0 10px var(--brand-glow)}
-.dps-opt .dp-img{width:40px;height:40px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--surface2)}
+.dps-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px 4px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
+.dps-opt:hover{border-color:rgba(139,92,246,0.3)}
+.dps-opt .dp-img{width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--surface2);transition:all 0.2s}
 .dps-opt .dp-img img{width:100%;height:100%;object-fit:cover}
-.dps-opt .dp-name{font-size:10px;font-weight:600;color:var(--text)}
-.dps-opt .dp-tag{font-size:8px;color:var(--muted)}
-.dps-opt.picked{opacity:0.5;pointer-events:auto}
-.dps-opt.picked::after{content:'✓';position:absolute;top:2px;right:6px;font-size:12px;color:var(--brand);font-weight:800}
-.dps-opt.locked{opacity:0.35;pointer-events:none}
+.dps-opt .dp-name{font-size:11px;font-weight:600;color:var(--text)}
+.dps-opt .dp-tag{font-size:8px;color:var(--muted);margin-top:2px}
+.dps-opt.picked{opacity:0.5}
+.dps-opt.picked::after{content:'✓';position:absolute;top:3px;right:6px;font-size:13px;color:var(--brand);font-weight:800}
+.dps-opt.locked{opacity:0.2;pointer-events:none}
 .dps-opt.locked::after{content:''}
-.confirm-dps{width:100%;padding:12px;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand-dim),var(--brand));margin-top:10px}
+.confirm-dps{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;font-family:inherit;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--brand-dim),var(--brand));margin-top:12px;letter-spacing:0.5px}
 .confirm-dps:active{transform:scale(0.97)}
-.confirm-dps:disabled{opacity:0.25;cursor:not-allowed}
+.confirm-dps:disabled{opacity:0.2;cursor:not-allowed}
 
 .result{display:none;margin-bottom:16px}
 .result.show{display:block}
-.team-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
-.team-card .th{padding:10px 14px;display:flex;align-items:center;gap:6px}
-.team-card .th .tn{font-size:13px;font-weight:700}
-.team-card .th .td{font-size:10px;color:var(--muted);margin-left:auto}
-.team-card .tb{padding:8px 14px 14px;display:flex;gap:8px;justify-content:center}
-.team-card .slot{flex:1;min-width:70px;max-width:120px;text-align:center;background:var(--surface2);border-radius:8px;padding:8px 4px;cursor:pointer;position:relative;transition:all 0.15s}
-.team-card .slot:active{transform:scale(0.96)}
-.team-card .slot .si{width:40px;height:40px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--border)}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;position:relative}
+.team-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.team-card .th{padding:12px 16px;display:flex;align-items:center;gap:8px}
+.team-card .th .tn{font-size:14px;font-weight:700}
+.team-card .th .td{font-size:11px;color:var(--muted);margin-left:auto}
+.team-card .tb{padding:10px 14px 16px;display:flex;gap:10px;justify-content:center}
+.team-card .slot{flex:1;min-width:72px;max-width:130px;text-align:center;background:var(--surface2);border-radius:10px;padding:10px 4px;cursor:pointer;position:relative;transition:all 0.2s}
+.team-card .slot:hover{background:rgba(139,92,246,0.05)}
+.team-card .slot .si{width:44px;height:44px;border-radius:50%;overflow:hidden;margin:0 auto 4px;background:var(--border);transition:all 0.2s}
 .team-card .slot .si img{width:100%;height:100%;object-fit:cover}
-.team-card .slot .sn{font-size:10px;font-weight:600;color:var(--text)}
-.team-card .slot .sr{font-size:8px;color:var(--muted);margin-top:1px}
-.team-card .slot.main .si{border:2px solid var(--amber);box-shadow:0 0 6px rgba(245,158,11,0.3)}
-.team-card .slot.main .sn{color:var(--amber)}
-.team-card .slot.main .sr{color:var(--amber);font-weight:600}
-.team-card .slot.swapable{border:1px dashed var(--border)}
-.team-card .slot.swapable::after{content:'⇄';position:absolute;top:-6px;right:-4px;font-size:10px;color:var(--brand);font-weight:800}
-.team-card .slot.empty{opacity:0.4}
-.team-card .slot.note{background:var(--amber-bg);border-color:rgba(245,158,11,0.3);cursor:default}
+.team-card .slot .sn{font-size:10px;font-weight:600;color:var(--text);line-height:1.2}
+.team-card .slot .sr{font-size:8px;color:var(--muted);margin-top:2px;display:inline-block;padding:1px 6px;border-radius:4px}
+.team-card .slot.main .si{border:2.5px solid var(--amber);box-shadow:0 0 12px rgba(245,158,11,0.25)}
+.team-card .slot.main .sn{color:var(--amber);font-weight:700}
+.team-card .slot.main .sr{color:var(--amber);font-weight:700;background:rgba(245,158,11,0.08)}
+.team-card .slot.swapable{border:1.5px dashed rgba(139,92,246,0.2)}
+.team-card .slot.swapable::after{content:'⇄';position:absolute;top:-7px;right:-5px;font-size:11px;color:var(--brand);font-weight:800;text-shadow:0 0 8px rgba(139,92,246,0.4)}
+.team-card .slot.empty{opacity:0.35}
+.team-card .slot.note{background:var(--amber-bg);border-color:rgba(245,158,11,0.2);cursor:default}
 .team-card .slot.note .sn{color:var(--amber);font-size:9px}
-.teams .th.t-green{background:var(--green-bg)}.teams .th.t-green .tn{color:var(--green)}
-.teams .th.t-blue{background:rgba(96,165,250,0.1)}.teams .th.t-blue .tn{color:var(--blue)}
-.teams .th.t-purple{background:rgba(139,92,246,0.1)}.teams .th.t-purple .tn{color:#c4b5fd}
-.teams .th.t-red{background:var(--red-bg)}.teams .th.t-red .tn{color:var(--red)}
 
-.swap-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.t-green::before{background:linear-gradient(90deg,var(--green),rgba(34,197,94,0.3))}
+.t-green .th{background:var(--green-bg)}
+.t-green .tn{color:var(--green)}
+.t-blue::before{background:linear-gradient(90deg,var(--blue),rgba(96,165,250,0.3))}
+.t-blue .th{background:rgba(96,165,250,0.08)}
+.t-blue .tn{color:var(--blue)}
+.t-purple::before{background:linear-gradient(90deg,var(--brand),rgba(139,92,246,0.3))}
+.t-purple .th{background:rgba(139,92,246,0.08)}
+.t-purple .tn{color:#c4b5fd}
+
+.summary-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.summary-card .s-title{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:6px}
+.summary-card .s-text{font-size:11px;color:var(--muted);line-height:1.7}
+.suggestion{background:var(--amber-bg);border:1px solid rgba(245,158,11,0.15);border-radius:var(--radius);padding:14px 16px;margin-bottom:14px}
+.suggestion .s-title{font-size:11px;font-weight:700;color:var(--amber);margin-bottom:4px}
+.suggestion .s-text{font-size:10px;color:var(--muted);line-height:1.6}
+
+.swap-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:100;display:none;align-items:center;justify-content:center;padding:24px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 .swap-overlay.show{display:flex}
-.swap-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;width:100%;max-width:360px;max-height:70vh;overflow-y:auto}
-.swap-panel .sp{font-size:12px;font-weight:700;color:#c4b5fd;margin-bottom:10px}
-.swap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.swap-opt{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px;text-align:center;cursor:pointer}
-.swap-opt:active{transform:scale(0.95)}
-.swap-opt .swi{width:36px;height:36px;border-radius:50%;overflow:hidden;margin:0 auto 3px;background:var(--surface2)}
+.swap-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;width:100%;max-width:360px;max-height:75vh;overflow-y:auto}
+.swap-panel .sp{font-size:13px;font-weight:700;color:#c4b5fd;margin-bottom:4px}
+.swap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.swap-opt{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all 0.15s}
+.swap-opt:hover{border-color:rgba(139,92,246,0.3)}
+.swap-opt .swi{width:38px;height:38px;border-radius:50%;overflow:hidden;margin:0 auto 3px;background:var(--surface2)}
 .swap-opt .swi img{width:100%;height:100%;object-fit:cover}
 .swap-opt .swn{font-size:10px;font-weight:600;color:var(--text)}
-.swap-opt .swr{font-size:8px;color:var(--muted)}
-.swap-opt.used{opacity:0.3;pointer-events:none}
+.swap-opt .swr{font-size:8px;color:var(--muted);margin-top:1px}
 
-.footer{text-align:center;font-size:10px;color:var(--muted);padding:12px 0;line-height:1.8}
-.footer a{color:var(--brand);text-decoration:none}
-.footer .disclaimer{margin-top:6px;font-size:9px;color:var(--muted);opacity:0.7}
+.footer{text-align:center;font-size:10px;color:var(--muted);padding:16px 0;line-height:1.8}
+.footer a{color:var(--brand);text-decoration:none;transition:opacity 0.2s}
+.footer a:hover{opacity:0.8}
+.footer .disclaimer{margin-top:8px;font-size:9px;color:var(--muted);opacity:0.5}
 
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
-  .char-card .avatar-wrap{width:40px;height:40px}
+  .char-card .avatar-wrap{width:42px;height:42px}
   .dps-grid,.swap-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
@@ -139,17 +182,23 @@ body{font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;background:v
 <body>
 <div class="container">
   <div class="header">
-    <h1>✦ 绝区零配队助手</h1>
-    <span class="badge">v3.0下半 · 虹棱Hoanlen</span>
-    <span class="ver">选角色 → 挑主C → 自动配队</span>
+    <div class="header-bg"></div>
+    <div class="header-content">
+      <h1>✦ 绝区零配队助手</h1>
+      <div class="header-meta">
+        <span class="badge">v3.1 · 虹棱Hoanlen</span>
+        <span class="update-date">更新于 2026.07.14</span>
+      </div>
+      <span class="ver">选角色 → 挑主C → 自动配队</span>
+    </div>
   </div>
 
   <div class="consent-box">
-    <p style="font-size:10px;color:var(--amber);margin-bottom:4px">⚠️ 老角色实在安排不过来，只做了一部分看来能和3.0版本角色挂钩的限定角色。1.x回归玩家尽量不要问为什么没有XXX角色，问就是连口汤都没，被策划生生地饿死了。作者抽个二命简就是为了一直喝汤，现在突然不让喝，蕾米埃尔队里的简是个白板角色，耀变无法暴击，简的核心被动直接跟没有一样，21简不如01爱芮，真金白银的花了钱不如别人两金，真该骂膨胀了。<br>顺带一提，简的加强的提升率看着挺唬人实则仅5%提升，悠真都有10%。</p>
+    <p style="font-size:10px;color:var(--amber);margin-bottom:4px">⚠️ 老角色实在安排不过来，只做了一部分能和3.0版本角色挂钩的限定角色。1.x回归玩家尽量不要问为什么没有XXX角色，问就是连口汤都没，被策划生生地饿死了。作者抽个二命简就是为了一直喝汤，现在突然不让喝，蕾米埃尔队里的简是个白板角色，耀变无法暴击，简的核心被动直接跟没有一样，21简不如01爱芮，真金白银的花了钱不如别人两金，真该骂膨胀了。<br>顺带一提，简的加强的提升率看着挺唬人实则仅5%提升，悠真都有10%。</p>
     <p><strong>虹棱建议</strong></p>
     <p>先保证三队都有至少一个限定S角色，输出或击破都可以，推荐限定S击破是因为常驻的佩洛伊斯和猫又都能用。新手只建议00平铺。一定要考虑持有一个限定击破角色！</p>
     <div class="rule-line">
-      <strong>⚡ 警告：</strong>下一个限定击破可能半年后才出。向前看选诺姆，向后看选琉音。老击破强度已经不够了。佩洛伊斯大招喧响2000，策划已经警告你了。琉音后面会越来越不适配3.0角色。
+      <strong>⚡ 警告：</strong>下一个限定击破可能半年后才出。向前看选诺姆，向后看选琉音。老击破强度不够了。佩洛伊斯大招喧响2000，策划警告你了。琉音后面会越来越不适配3.0角色。
     </div>
     <p><strong>推荐关注的输出角色：</strong>蕾米埃尔、希格莉德、维琳娜、佩洛伊斯、叶瞬光</p>
     <p><strong>推荐关注的击破角色：</strong>琉音、诺姆</p>
@@ -157,17 +206,17 @@ body{font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;background:v
     <p style="font-size:10px;color:var(--muted);margin-top:2px">关于简的待遇问题有助于新手理解本游戏该如何抽卡，你们说是吧，艾莲朱鸢青衣凯撒悠真。</p>
      <p style="font-size:10px;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
     <label class="consent-label">
-      <input type="checkbox" id="consentCheck"> 我已经通读作者的建议
-    </label>
+        <input type="checkbox" id="consentCheck"> <span style="color:var(--red);font-weight:700;margin-right:2px">*</span> 我已经通读作者的建议
+      </label>
   </div>
 
   <div class="section">
     <div class="section-label">🎮 选你的角色</div>
     <span class="section-hint" id="countDisplay">已选 0 个</span>
   </div>
-  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-    <button class="reset-btn" id="quickSelectAll" style="display:inline;width:auto;padding:4px 12px;margin:0;font-size:10px">➕ 一键全选常驻</button>
-    <button class="reset-btn" id="quickSelectCore" style="display:inline;width:auto;padding:4px 12px;margin:0;font-size:10px">⭐ 推荐角色</button>
+  <div class="quick-btns">
+    <button class="quick-btn" id="quickSelectAll">➕ 全选常驻</button>
+    <button class="quick-btn" id="quickSelectCore">⭐ 推荐角色</button>
   </div>
 
   <div class="filter-bar" id="filterBar"></div>
@@ -177,7 +226,7 @@ body{font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;background:v
     <div class="dp">👑 选3个主C（从你选的强攻/异常角色中选）<br><span style="font-size:9px;color:var(--muted);font-weight:400">⚠️ 简0命不行，2命才能玩，新手不要选</span></div>
     <div class="dps-grid" id="dpsGrid"></div>
     <button class="confirm-dps" id="confirmDps" disabled>确认生成配队</button>
-    <div style="text-align:center;margin-top:8px"><button class="reset-btn" id="cancelDps" style="display:inline;width:auto;padding:4px 16px;margin:0">取消</button></div>
+    <div style="text-align:center;margin-top:10px"><button class="quick-btn" id="cancelDps" style="display:inline;width:auto;padding:4px 16px;margin:0">取消</button></div>
   </div>
 
   <div class="btn-area">
@@ -197,45 +246,44 @@ body{font-family:'Inter','Microsoft YaHei','PingFang SC',sans-serif;background:v
 <div class="swap-overlay" id="swapOverlay">
   <div class="swap-panel">
     <div class="sp" id="swapTitle">选择队友</div>
-    <div style="text-align:right;margin-bottom:8px"><button style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit" id="swapCloseBtn">✕ 关闭</button></div>
+    <div style="text-align:right;margin-top:2px"><button style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;opacity:0.6" id="swapCloseBtn">✕ 关闭</button></div>
     <div class="swap-grid" id="swapGrid"></div>
   </div>
 </div>
 
 <script>
 const allChars = [
-  {id:"dan",name:"蕾米埃尔",img:"./蕾米埃尔.png",role:"异常",tier:"S"},
-  {id:"xigelide",name:"希格莉德",img:"./希格莉德.png",role:"强攻",tier:"S"},
-  {id:"nuomu",name:"诺姆",img:"./诺姆.png",role:"击破",tier:"S"},
-  {id:"weilinna",name:"维琳娜",img:"./维琳娜.png",role:"异常",tier:"S"},
-  {id:"peiluoyisi",name:"佩洛伊斯",img:"./佩洛伊斯.png",role:"强攻",tier:"S"},
-  {id:"puluomiya",name:"普罗米娅",img:"./普罗米娅.png",role:"异常",tier:"S"},
-  {id:"nangongyu",name:"南宫羽",img:"./南宫羽.png",role:"击破",tier:"S"},
-  {id:"luxiya",name:"卢西娅",img:"./卢西娅.png",role:"支援",tier:"S"},
-  {id:"airui",name:"爱芮",img:"./爱芮.png",role:"异常",tier:"S"},
-  {id:"qianxia",name:"千夏",img:"./千夏.png",role:"支援",tier:"S"},
-  {id:"yeshiguang",name:"叶瞬光",img:"./叶瞬光.png",role:"强攻",tier:"S"},
-  {id:"zhao",name:"照",img:"./照.png",role:"防护",tier:"S"},
-  {id:"liuyin",name:"琉音",img:"./琉音.png",role:"击破",tier:"S"},
-  {id:"youye",name:"柚叶",img:"./柚叶.png",role:"支援",tier:"S"},
-  {id:"bainisi",name:"柏妮思",img:"./柏尼思.png",role:"异常",tier:"S"},
-  {id:"yaojiayin",name:"耀佳音",img:"./耀佳音.png",role:"支援",tier:"S"},
-  {id:"jian",name:"简",img:"./简.png",role:"异常",tier:"S"},
-  {id:"laikaen",name:"莱卡恩",img:"./莱卡恩.png",role:"击破",tier:"S"},
-  {id:"maoyou",name:"猫又",img:"./猫又.png",role:"强攻",tier:"S"},
-  {id:"lina",name:"丽娜",img:"./丽娜.png",role:"支援",tier:"S"},
-  {id:"11hao",name:"11号",img:"./11号.png",role:"强攻",tier:"S"},
-  {id:"gelisi",name:"格莉丝",img:"./格莉丝.png",role:"异常",tier:"S"},
-  {id:"keleida",name:"珂蕾妲",img:"./珂雷妲.png",role:"击破",tier:"S"},
-  {id:"paipai",name:"派派",img:"./派派.png",role:"异常",tier:"A"},
-  {id:"nike",name:"妮可",img:"./妮可.png",role:"支援",tier:"A"},
-  {id:"anbi",name:"安比",img:"./安比.png",role:"击破",tier:"A"},
-  {id:"cangjiao",name:"苍角",img:"./苍角.png",role:"支援",tier:"A"},
-  {id:"luxi",name:"露西",img:"./露西.png",role:"支援",tier:"A"},
+  {id:"dan",name:"蕾米埃尔",img:"./images/蕾米埃尔.png",role:"异常",tier:"S"},
+  {id:"xigelide",name:"希格莉德",img:"./images/希格莉德.png",role:"强攻",tier:"S"},
+  {id:"nuomu",name:"诺姆",img:"./images/诺姆.png",role:"击破",tier:"S"},
+  {id:"weilinna",name:"维琳娜",img:"./images/维琳娜.png",role:"异常",tier:"S"},
+  {id:"peiluoyisi",name:"佩洛伊斯",img:"./images/佩洛伊斯.png",role:"强攻",tier:"S"},
+  {id:"puluomiya",name:"普罗米娅",img:"./images/普罗米娅.png",role:"异常",tier:"S"},
+  {id:"nangongyu",name:"南宫羽",img:"./images/南宫羽.png",role:"击破",tier:"S"},
+  {id:"luxiya",name:"卢西娅",img:"./images/卢西娅.png",role:"支援",tier:"S"},
+  {id:"airui",name:"爱芮",img:"./images/爱芮.png",role:"异常",tier:"S"},
+  {id:"qianxia",name:"千夏",img:"./images/千夏.png",role:"支援",tier:"S"},
+  {id:"yeshiguang",name:"叶瞬光",img:"./images/叶瞬光.png",role:"强攻",tier:"S"},
+  {id:"zhao",name:"照",img:"./images/照.png",role:"防护",tier:"S"},
+  {id:"liuyin",name:"琉音",img:"./images/琉音.png",role:"击破",tier:"S"},
+  {id:"youye",name:"柚叶",img:"./images/柚叶.png",role:"支援",tier:"S"},
+  {id:"bainisi",name:"柏妮思",img:"./images/柏尼思.png",role:"异常",tier:"S"},
+  {id:"yaojiayin",name:"耀佳音",img:"./images/耀佳音.png",role:"支援",tier:"S"},
+  {id:"jian",name:"简",img:"./images/简.png",role:"异常",tier:"S"},
+  {id:"laikaen",name:"莱卡恩",img:"./images/莱卡恩.png",role:"击破",tier:"S"},
+  {id:"maoyou",name:"猫又",img:"./images/猫又.png",role:"强攻",tier:"S"},
+  {id:"lina",name:"丽娜",img:"./images/丽娜.png",role:"支援",tier:"S"},
+  {id:"11hao",name:"11号",img:"./images/11号.png",role:"强攻",tier:"S"},
+  {id:"gelisi",name:"格莉丝",img:"./images/格莉丝.png",role:"异常",tier:"S"},
+  {id:"keleida",name:"珂蕾妲",img:"./images/珂雷妲.png",role:"击破",tier:"S"},
+  {id:"paipai",name:"派派",img:"./images/派派.png",role:"异常",tier:"A"},
+  {id:"nike",name:"妮可",img:"./images/妮可.png",role:"支援",tier:"A"},
+  {id:"anbi",name:"安比",img:"./images/安比.png",role:"击破",tier:"A"},
+  {id:"cangjiao",name:"苍角",img:"./images/苍角.png",role:"支援",tier:"A"},
+  {id:"luxi",name:"露西",img:"./images/露西.png",role:"支援",tier:"A"},
 ];
 const roleTags={"强攻":"tag-atk","击破":"tag-stun","异常":"tag-ano","支援":"tag-sup","防护":"tag-def"};
 const filterRoles=["全部","强攻","击破","异常","支援","防护"];
-
 const quickIds={
   allStable:["laikaen","maoyou","lina","11hao","gelisi","keleida","peiluoyisi","paipai","nike","anbi","cangjiao","luxi"],
   starred:["dan","xigelide","nuomu","liuyin","weilinna","peiluoyisi","yeshiguang"],
@@ -243,16 +291,13 @@ const quickIds={
 
 const teamRules={
   defaultAtk:{second:["nuomu","liuyin","laikaen","nangongyu","keleida","anbi"],third:["nike","qianxia","yaojiayin","lina","zhao","luxi","cangjiao"]},
-  // 叶瞬光特殊规则
-   yeshiguang:{
-     second:["qianxia","liuyin","zhao"],
-     third:["qianxia","liuyin","zhao","yaojiayin","lina","luxi","cangjiao","nike"]
-   },
-   // 普罗米娅：异常C，但配击破+支援
-   puluomiya:{second:["laikaen","nangongyu","nuomu","liuyin","keleida","anbi"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
-   // 爱芮：异常C，但配击破+支援
-   airui:{second:["laikaen","nangongyu","nuomu","liuyin","keleida","anbi"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
-   defaultAno:{second:["weilinna","airui","jian","bainisi","paipai","gelisi","puluomiya"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
+  yeshiguang:{
+    second:["qianxia","liuyin","zhao"],
+    third:["qianxia","liuyin","zhao","yaojiayin","lina","luxi","cangjiao","nike"]
+  },
+  puluomiya:{second:["laikaen","nangongyu","nuomu","liuyin","keleida","anbi"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
+  airui:{second:["laikaen","nangongyu","nuomu","liuyin","keleida","anbi"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
+  defaultAno:{second:["weilinna","airui","jian","bainisi","paipai","gelisi","puluomiya"],third:["youye","luxiya","qianxia","lina","nike","cangjiao","luxi","zhao"]},
   dan:{second:["weilinna","airui","bainisi","jian","paipai","gelisi","puluomiya"],third:["weilinna","airui","bainisi","jian","paipai","gelisi","puluomiya"]},
 };
 
@@ -296,16 +341,14 @@ function renderGrid(){
 }
 
 function showDpsPicker(){
-  const picker=document.getElementById("dpsPicker");
+  const picker=document.getElementById("dpsPicker");picker.classList.add("show");
   const grid=document.getElementById("dpsGrid");
   const candidates=allChars.filter(c=>selected.has(c.id)&&(c.role==="强攻"||c.role==="异常"));
   grid.innerHTML=candidates.map(c=>{
     const isPicked=pickedDps.includes(c.id);
-    const isLocked=!isPicked && pickedDps.length>=3;
-    const pickedCls=isPicked?"picked":"";
-    const lockedCls=isLocked?"locked":"";
+    const isLocked=!isPicked&&pickedDps.length>=3;
     const rt=roleTags[c.role]||"";
-    return `<div class="dps-opt ${pickedCls} ${lockedCls}" data-id="${c.id}">
+    return `<div class="dps-opt ${isPicked?'picked':''} ${isLocked?'locked':''}" data-id="${c.id}">
       <div class="dp-img"><img src="${c.img}" loading="lazy"></div>
       <div class="dp-name">${c.name}</div>
       <span class="dp-tag tag ${rt}">${c.role}</span>
@@ -328,187 +371,114 @@ function showDpsPicker(){
       showDpsPicker();
     });
   });
-  picker.classList.add("show");
 }
 
-function pickBest(list, used, preferS){
+function pickBest(list,used,preferS){
   const pool=list.filter(id=>selected.has(id)&&!used.has(id));
-  if(pool.length===0)return null;
-  if(preferS){
-    const sPool=pool.filter(id=>{const ch=allChars.find(c=>c.id===id);return ch&&ch.tier==="S";});
-    if(sPool.length>0)return sPool[0];
-  }
+  if(!pool.length)return null;
+  if(preferS){const sp=pool.filter(id=>{const ch=allChars.find(c=>c.id===id);return ch&&ch.tier==="S";});if(sp.length)return sp[0];}
   return pool[0];
 }
 
 function buildTeamsFromDps(dpsIds){
   const used=new Set(dpsIds);
   const teams=[];
-
-  // 如果蕾米埃尔和维琳娜同时被选为主C，维琳娜当蕾米队友，不单独成队
-  let adjustedDps = [...dpsIds];
-  if(dpsIds.includes("dan") && dpsIds.includes("weilinna")){
-    adjustedDps = dpsIds.filter(id => id !== "weilinna");
-    used.delete("weilinna");
-  }
-
-  // 如果异常角色>=3且蕾米埃尔在选中角色中，强制蕾米埃尔三异常队
+  let adjustedDps=[...dpsIds];
+  if(dpsIds.includes("dan")&&dpsIds.includes("weilinna")){adjustedDps=dpsIds.filter(id=>id!=="weilinna");used.delete("weilinna");}
   const allAnoIds=allChars.filter(c=>c.role==="异常"&&selected.has(c.id)).map(c=>c.id);
-  const forceDanTeam=selected.has("dan") && allAnoIds.length>=3;
+  const forceDanTeam=selected.has("dan")&&allAnoIds.length>=3;
   let hasDan=adjustedDps.includes("dan")||forceDanTeam;
 
   if(forceDanTeam){
     const team={dps:["dan"],slots:[{id:"dan",main:true}]};
     const otherAno=allAnoIds.filter(id=>id!=="dan"&&!used.has(id));
-    let secondPick=otherAno.includes("weilinna")?"weilinna":(otherAno[0]||null);
-    if(secondPick){team.slots.push({id:secondPick,main:false});used.add(secondPick);}
-    else team.slots.push(null);
+    let sp=otherAno.includes("weilinna")?"weilinna":(otherAno[0]||null);
+    if(sp){team.slots.push({id:sp,main:false});used.add(sp);}else team.slots.push(null);
     if(team.slots.length<3){
-      const usedInTeam=new Set(team.slots.filter(s=>s).map(s=>s.id));
-      const remaining=otherAno.filter(id=>!usedInTeam.has(id)&&!used.has(id));
-      let thirdPick=remaining[0]||null;
-      if(thirdPick){team.slots.push({id:thirdPick,main:false});used.add(thirdPick);}
-      else team.slots.push({id:"need_ano",main:false,note:true});
+      const uit=new Set(team.slots.filter(s=>s).map(s=>s.id));
+      const rem=otherAno.filter(id=>!uit.has(id)&&!used.has(id));
+      let tp=rem[0]||null;
+      if(tp){team.slots.push({id:tp,main:false});used.add(tp);}else team.slots.push({id:"need_ano",main:false,note:true});
     }
-     teams.push(team);
-     // 如果用户没选蕾米埃尔当主C，蕾米已经占了第一队
-   } else if(hasDan){
+    teams.push(team);
+  }else if(hasDan){
     const team={dps:["dan"],slots:[{id:"dan",main:true}]};
-    const secondRules=teamRules.dan.second;
-    let secondPick=pickBest(secondRules,used,true);
-    if(secondPick){team.slots.push({id:secondPick,main:false});used.add(secondPick);}
-    else team.slots.push(null);
+    let sp=pickBest(teamRules.dan.second,used,true);
+    if(sp){team.slots.push({id:sp,main:false});used.add(sp);}else team.slots.push(null);
     if(team.slots.length<3){
-      const usedInTeam=new Set(team.slots.filter(s=>s).map(s=>s.id));
-      const thirdCandidates=teamRules.dan.third.filter(x=>!usedInTeam.has(x));
-      let thirdPick=pickBest(thirdCandidates,used,true);
-      if(!thirdPick)thirdPick=pickBest(thirdCandidates,used,false);
-      if(thirdPick){team.slots.push({id:thirdPick,main:false});used.add(thirdPick);}
-      else team.slots.push({id:"need_ano",main:false,note:true});
+      const uit=new Set(team.slots.filter(s=>s).map(s=>s.id));
+      let tp=pickBest(teamRules.dan.third.filter(x=>!uit.has(x)),used,true);
+      if(!tp)tp=pickBest(teamRules.dan.third.filter(x=>!uit.has(x)),used,false);
+      if(tp){team.slots.push({id:tp,main:false});used.add(tp);}else team.slots.push({id:"need_ano",main:false,note:true});
     }
     teams.push(team);
   }
 
-  // 剩余主C
   for(const id of adjustedDps){
     if((id==="dan"&&hasDan)||teams.find(t=>t.dps.includes(id)))continue;
     const info=allChars.find(c=>c.id===id);
     if(!info)continue;
     const isAno=info.role==="异常";
-
     let rules;
-     if(id==="yeshiguang"){
-        rules=teamRules.yeshiguang;
-      } else if(id==="puluomiya"){
-        rules=teamRules.puluomiya;
-      } else if(id==="airui"){
-        rules=teamRules.airui;
-      } else if(isAno){
-       rules=teamRules.defaultAno;
-     } else {
-       rules=teamRules.defaultAtk;
-     }
+    if(id==="yeshiguang")rules=teamRules.yeshiguang;
+    else if(id==="puluomiya")rules=teamRules.puluomiya;
+    else if(id==="airui")rules=teamRules.airui;
+    else if(isAno)rules=teamRules.defaultAno;
+    else rules=teamRules.defaultAtk;
 
     const team={dps:[id],slots:[{id,main:true}]};
     used.add(id);
-
-    // Second slot
-    const secondCandidates=rules.second;
-    let secondPick=pickBest(secondCandidates,used,true);
-    if(!secondPick)secondPick=pickBest(secondCandidates,used,false);
-    if(secondPick){
-      team.slots.push({id:secondPick,main:false});
-      used.add(secondPick);
-    } else if(id==="yeshiguang"){
-      // 叶瞬光：千夏/琉音/照都没有，选击破备选
+    let secondPick=pickBest(rules.second,used,true);
+    if(!secondPick)secondPick=pickBest(rules.second,used,false);
+    if(secondPick){team.slots.push({id:secondPick,main:false});used.add(secondPick);}
+    else if(id==="yeshiguang"){
       const stunPool=["nuomu","liuyin","laikaen","keleida","anbi"];
       secondPick=pickBest(stunPool,used,true);
       if(!secondPick)secondPick=pickBest(stunPool,used,false);
-      if(secondPick){team.slots.push({id:secondPick,main:false});used.add(secondPick);}
-      else team.slots.push(null);
-    } else {
-      team.slots.push(null);
-    }
+      if(secondPick){team.slots.push({id:secondPick,main:false});used.add(secondPick);}else team.slots.push(null);
+    }else team.slots.push(null);
 
-    // Third slot
     if(team.slots.length<3){
-      const usedInTeam=new Set(team.slots.filter(s=>s).map(s=>s.id));
-      const thirdCandidates=rules.third.filter(x=>!usedInTeam.has(x));
-      let thirdPick=pickBest(thirdCandidates,used,true);
-      if(!thirdPick)thirdPick=pickBest(thirdCandidates,used,false);
-      if(!thirdPick){
-        // Any remaining
-        for(const x of selected){if(!used.has(x)){thirdPick=x;break;}}
-      }
-      if(thirdPick){team.slots.push({id:thirdPick,main:false});used.add(thirdPick);}
-      else team.slots.push(null);
+      const usedInTeam=new Set(team.slots.filter(s=>s&&!s.note).map(s=>s.id));
+      const tc=rules.third.filter(x=>!usedInTeam.has(x));
+      let thirdPick=pickBest(tc,used,true);
+      if(!thirdPick)thirdPick=pickBest(tc,used,false);
+      if(!thirdPick){for(const x of selected){if(!used.has(x)){thirdPick=x;break;}}}
+      if(thirdPick){team.slots.push({id:thirdPick,main:false});used.add(thirdPick);}else team.slots.push(null);
     }
 
-    // Check for double stun
-    const stunRoles=["击破"];
-    const stunCount=team.slots.filter(s=>{
-      if(!s||s.note)return false;
-      const ci=allChars.find(c=>c.id===s.id);
-      return ci&&ci.role==="击破";
-    }).length;
+    const stunCount=team.slots.filter(s=>{if(!s||s.note)return false;const ci=allChars.find(c=>c.id===s.id);return ci&&ci.role==="击破";}).length;
     if(stunCount>=2){
-      // Replace second击破with a支援
-      const stunIdx=team.slots.findIndex((s,i)=>{
-        if(i===0)return false;
-        if(!s)return false;
-        const ci=allChars.find(c=>c.id===s.id);
-        return ci&&ci.role==="击破";
-      });
+      const stunIdx=team.slots.findIndex((s,i)=>{if(i===0)return false;if(!s)return false;const ci=allChars.find(c=>c.id===s.id);return ci&&ci.role==="击破";});
       if(stunIdx>0){
-        const suppCandidates=["qianxia","yaojiayin","lina","zhao","luxi","nike","cangjiao","luxiya","youye"];
-        let suppPick=pickBest(suppCandidates,used,true);
-        if(!suppPick)suppPick=pickBest(suppCandidates,used,false);
-        if(suppPick){
-          used.delete(team.slots[stunIdx].id);
-          team.slots[stunIdx]={id:suppPick,main:false};
-          used.add(suppPick);
-        }
+        const suppP=["qianxia","yaojiayin","lina","zhao","luxi","nike","cangjiao","luxiya","youye"];
+        let sup=pickBest(suppP,used,true);
+        if(!sup)sup=pickBest(suppP,used,false);
+        if(sup){used.delete(team.slots[stunIdx].id);team.slots[stunIdx]={id:sup,main:false};used.add(sup);}
       }
     }
-
     teams.push(team);
     if(teams.length>=3)break;
   }
 
-  // Deduplicate: check if any non-main角色appears in multiple teams
   const allUsed=new Set();
   const deduped=[];
   for(const t of teams){
-    const slots=t.slots;
-    for(let i=0;i<slots.length;i++){
-      const s=slots[i];
+    for(let i=0;i<t.slots.length;i++){
+      const s=t.slots[i];
       if(!s||s.main||s.note)continue;
       if(allUsed.has(s.id)){
-        // Try to replace
-        const info=allChars.find(c=>c.id===s.id);
-        const isStun=info&&info.role==="击破";
-        const isSupp=info&&info.role==="支援";
-        let replacement=null;
-        if(isStun){
-          const stunPool=["nuomu","liuyin","laikaen","nangongyu","keleida","anbi"].filter(x=>!used.has(x)&&selected.has(x));
-          replacement=pickBest(stunPool,allUsed,true);
-          if(!replacement)replacement=pickBest(stunPool,allUsed,false);
-        }
-        if(isSupp){
-          const suppPool=["qianxia","yaojiayin","lina","zhao","luxi","nike","cangjiao","luxiya","youye"].filter(x=>!used.has(x)&&selected.has(x));
-          replacement=pickBest(suppPool,allUsed,true);
-          if(!replacement)replacement=pickBest(suppPool,allUsed,false);
-        }
-        if(replacement){
-          used.add(replacement);
-          slots[i]={id:replacement,main:false};
-        }
+        const ci=allChars.find(c=>c.id===s.id);
+        const isStun=ci&&ci.role==="击破";const isSupp=ci&&ci.role==="支援";
+        let rep=null;
+        if(isStun){const pool=["nuomu","liuyin","laikaen","nangongyu","keleida","anbi"].filter(x=>!used.has(x)&&selected.has(x));rep=pickBest(pool,allUsed,true);if(!rep)rep=pickBest(pool,allUsed,false);}
+        if(isSupp){const pool=["qianxia","yaojiayin","lina","zhao","luxi","nike","cangjiao","luxiya","youye"].filter(x=>!used.has(x)&&selected.has(x));rep=pickBest(pool,allUsed,true);if(!rep)rep=pickBest(pool,allUsed,false);}
+        if(rep){used.add(rep);t.slots[i]={id:rep,main:false};}
       }
       if(!s.main&&!s.note)allUsed.add(s.id);
     }
     deduped.push(t);
   }
-
   return deduped;
 }
 
@@ -518,21 +488,17 @@ function renderTeams(teams){
   const colors=["green","blue","purple"];
   const icons=["⭐","⚡","🎲"];
   const labels=["一队","二队","三队"];
-  let html=`<div class="teams">`;
+  let html=`<div class="summary-card"><div class="s-title">📋 为你生成 ${teams.filter(t=>t.slots.some(s=>s&&!s.note)).length} 队</div><div class="s-text">每队至少一个输出角色，缺人位置点击 ⇄ 切换队友。</div></div>`;
   teams.forEach((t,i)=>{
     const c=colors[i]||"amber";
-    html+=`<div class="team-card"><div class="th t-${c}"><span class="tn">${labels[i]}</span><span class="td">${icons[i]}</span></div><div class="tb">`;
+    html+=`<div class="team-card t-${c}"><div class="th"><span class="tn">${labels[i]}</span><span class="td">${icons[i]}</span></div><div class="tb">`;
     t.slots.forEach((s,j)=>{
-      if(!s){html+=`<div class="slot empty"><div class="si" style="display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--muted)">?</div><div class="sn">缺人</div></div>`;return;}
-      if(s.note){
-        html+=`<div class="slot note"><div class="si" style="background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--amber)">!</div><div class="sn">缺异常</div><span class="sr" style="font-size:7px;color:var(--amber)">蕾米埃尔需2异常</span></div>`;
-        return;
-      }
+      if(!s){html+=`<div class="slot empty"><div class="si" style="display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted)">?</div><div class="sn">缺人</div></div>`;return;}
+      if(s.note){html+=`<div class="slot note"><div class="si" style="background:var(--amber-bg);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--amber)">!</div><div class="sn">缺异常</div><span class="sr" style="font-size:7px;color:var(--amber)">蕾米需2异常</span></div>`;return;}
       const info=allChars.find(x=>x.id===s.id);
       const rt=roleTags[info?info.role:""]||"";
-      const mainCls=s.main?"main":"";
-      const swapCls=s.main?"":"swapable";
-      html+=`<div class="slot ${mainCls} ${swapCls}" data-team="${i}" data-slot="${j}" data-id="${s.id}">
+      const mc=s.main?"main":"";const sc=s.main?"":"swapable";
+      html+=`<div class="slot ${mc} ${sc}" data-team="${i}" data-slot="${j}" data-id="${s.id}">
         <div class="si"><img src="${info?info.img:''}" loading="lazy"></div>
         <div class="sn">${info?info.name:s.id}</div>
         <span class="sr tag ${rt}">${s.main?"主C":info?info.role:''}</span>
@@ -540,124 +506,45 @@ function renderTeams(teams){
     });
     html+=`</div></div>`;
   });
-  html+=`</div>`;
   el.innerHTML=html;
   el.classList.add("show");
-
-  document.querySelectorAll(".slot.swapable").forEach(el=>{
-    el.addEventListener("click",()=>{
-      const teamIdx=parseInt(el.dataset.team);
-      const slotIdx=parseInt(el.dataset.slot);
-      const currentId=el.dataset.id;
-      showSwapOverlay(teamIdx,slotIdx,currentId);
-    });
-  });
+  document.querySelectorAll(".slot.swapable").forEach(el=>{el.addEventListener("click",()=>showSwapOverlay(parseInt(el.dataset.team),parseInt(el.dataset.slot),el.dataset.id));});
 }
 
-function showSwapOverlay(teamIdx,slotIdx,currentId){
-  const overlay=document.getElementById("swapOverlay");
+function showSwapOverlay(ti,si,cur){
+  const overlay=document.getElementById("swapOverlay");overlay.classList.add("show");
   const grid=document.getElementById("swapGrid");
-  const title=document.getElementById("swapTitle");
-
-  const team=currentTeams[teamIdx];
+  const team=currentTeams[ti];
   const mainIds=team.slots.filter(s=>s&&s.main).map(s=>s.id);
   const mainInfo=allChars.find(c=>mainIds.includes(c.id));
-  const isAnoMain=mainInfo&&mainInfo.role==="异常";
-
-  const usedInTeam=new Set();
-  team.slots.forEach(s=>{if(s&&s.id&&s.id!==currentId)usedInTeam.add(s.id);});
-
-  let candidates=[];
-  let preferredRoles=isAnoMain?["异常","支援","防护"]:["击破","支援","防护"];
-
-  // 检查是否已经有双击破
-  const stunCount=team.slots.filter(s=>{
-    if(!s||s.note)return false;
-    const ci=allChars.find(c=>c.id===s.id);
-    return ci&&ci.role==="击破";
-  }).length;
-  if(isAnoMain&&stunCount>0)preferredRoles=["异常","支援","防护"];
-
-  for(const r of preferredRoles){
-    allChars.filter(c=>selected.has(c.id)&&!usedInTeam.has(c.id)&&!currentTeams.some((t,ti)=>ti!==teamIdx&&t.slots.some(s=>s&&s.id===c.id))&&c.role===r).forEach(c=>{if(!candidates.find(x=>x.id===c.id))candidates.push(c);});
-  }
-  allChars.filter(c=>selected.has(c.id)&&!usedInTeam.has(c.id)&&!currentTeams.some((t,ti)=>ti!==teamIdx&&t.slots.some(s=>s&&s.id===c.id))).forEach(c=>{
-    if(!candidates.find(x=>x.id===c.id))candidates.push(c);
-  });
-
-  title.textContent=`选择${teamIdx+1}队 队友`;
-  grid.innerHTML=candidates.map(c=>{
+  const isAno=mainInfo&&mainInfo.role==="异常";
+  const usedInTeam=new Set();team.slots.forEach(s=>{if(s&&s.id&&s.id!==cur)usedInTeam.add(s.id);});
+  let cands=[];let prefs=isAno?["异常","支援","防护"]:["击破","支援","防护"];
+  const sc=team.slots.filter(s=>{if(!s||s.note)return false;const ci=allChars.find(c=>c.id===s.id);return ci&&ci.role==="击破";}).length;
+  if(isAno&&sc>0)prefs=["异常","支援","防护"];
+  for(const r of prefs){allChars.filter(c=>selected.has(c.id)&&!usedInTeam.has(c.id)&&!currentTeams.some((t,t2)=>t2!==ti&&t.slots.some(s=>s&&s.id===c.id))&&c.role===r).forEach(c=>{if(!cands.find(x=>x.id===c.id))cands.push(c);});}
+  allChars.filter(c=>selected.has(c.id)&&!usedInTeam.has(c.id)&&!currentTeams.some((t,t2)=>t2!==ti&&t.slots.some(s=>s&&s.id===c.id))).forEach(c=>{if(!cands.find(x=>x.id===c.id))cands.push(c);});
+  document.getElementById("swapTitle").textContent=`选择${ti+1}队 队友`;
+  grid.innerHTML=cands.map(c=>{
     const rt=roleTags[c.role]||"";
-    return `<div class="swap-opt" data-id="${c.id}">
-      <div class="swi"><img src="${c.img}" loading="lazy"></div>
-      <div class="swn">${c.name}</div>
-      <span class="swr tag ${rt}">${c.role}</span>
-    </div>`;
+    return `<div class="swap-opt" data-id="${c.id}"><div class="swi"><img src="${c.img}" loading="lazy"></div><div class="swn">${c.name}</div><span class="swr tag ${rt}">${c.role}</span></div>`;
   }).join("");
-
-  grid.querySelectorAll(".swap-opt").forEach(el=>{
-    el.addEventListener("click",()=>{
-      const newId=el.dataset.id;
-      currentTeams[teamIdx].slots[slotIdx]={id:newId,main:false};
-      renderTeams(currentTeams);
-      overlay.classList.remove("show");
-    });
-  });
-  overlay.classList.add("show");
+  grid.querySelectorAll(".swap-opt").forEach(el=>{el.addEventListener("click",()=>{currentTeams[ti].slots[si]={id:el.dataset.id,main:false};renderTeams(currentTeams);overlay.classList.remove("show");});});
   overlay.addEventListener("click",(e)=>{if(e.target===overlay)overlay.classList.remove("show");});
 }
 
-document.getElementById("consentCheck").addEventListener("change",function(){
-  consented=this.checked;
-  document.getElementById("analyzeBtn").disabled=!consented;
-});
-
+document.getElementById("consentCheck").addEventListener("change",function(){consented=this.checked;document.getElementById("analyzeBtn").disabled=!consented;});
 document.getElementById("analyzeBtn").addEventListener("click",()=>{
-  const dpsCandidates=allChars.filter(c=>selected.has(c.id)&&(c.role==="强攻"||c.role==="异常"));
-  if(dpsCandidates.length<1){
-    document.getElementById("result").innerHTML=`<div style="background:var(--amber-bg);border:1px solid rgba(245,158,11,0.2);border-radius:var(--radius);padding:12px;font-size:11px;color:var(--muted)"><strong style="color:var(--amber)">⚠️ 缺少主C</strong><br>选的角色里没有强攻或异常，至少需要一个输出角色才能配队。</div>`;
-    document.getElementById("result").classList.add("show");return;
-  }
+  const cs=allChars.filter(c=>selected.has(c.id)&&(c.role==="强攻"||c.role==="异常"));
+  if(!cs.length){document.getElementById("result").innerHTML=`<div class="suggestion"><div class="s-title">⚠️ 缺少主C</div><div class="s-text">选的角色里没有强攻或异常，至少需要一个输出角色才能配队。</div></div>`;document.getElementById("result").classList.add("show");return;}
   pickedDps=[];showDpsPicker();
 });
-
-document.getElementById("confirmDps").addEventListener("click",()=>{
-  const teams=buildTeamsFromDps(pickedDps);
-  renderTeams(teams);
-  document.getElementById("dpsPicker").classList.remove("show");
-  document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});
-});
-
-document.getElementById("resetBtn").addEventListener("click",()=>{
-  selected.clear();pickedDps=[];
-  document.getElementById("countDisplay").textContent="已选 0 个";
-  document.getElementById("dpsPicker").classList.remove("show");
-  document.getElementById("result").classList.remove("show");
-  renderGrid();
-});
-
-document.getElementById("cancelDps").addEventListener("click",()=>{
-  pickedDps=[];
-  document.getElementById("dpsPicker").classList.remove("show");
-  document.getElementById("confirmDps").disabled=true;
-});
-
-document.getElementById("swapCloseBtn").addEventListener("click",()=>{
-  document.getElementById("swapOverlay").classList.remove("show");
-});
-
-document.getElementById("quickSelectAll").addEventListener("click",()=>{
-  quickIds.allStable.forEach(id=>selected.add(id));
-  document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;
-  renderGrid();
-});
-
-document.getElementById("quickSelectCore").addEventListener("click",()=>{
-  quickIds.starred.forEach(id=>selected.add(id));
-  document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;
-  renderGrid();
-});
-
+document.getElementById("confirmDps").addEventListener("click",()=>{renderTeams(buildTeamsFromDps(pickedDps));document.getElementById("dpsPicker").classList.remove("show");document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});});
+document.getElementById("resetBtn").addEventListener("click",()=>{selected.clear();pickedDps=[];document.getElementById("countDisplay").textContent="已选 0 个";document.getElementById("dpsPicker").classList.remove("show");document.getElementById("result").classList.remove("show");renderGrid();});
+document.getElementById("cancelDps").addEventListener("click",()=>{pickedDps=[];document.getElementById("dpsPicker").classList.remove("show");document.getElementById("confirmDps").disabled=true;});
+document.getElementById("swapCloseBtn").addEventListener("click",()=>{document.getElementById("swapOverlay").classList.remove("show");});
+document.getElementById("quickSelectAll").addEventListener("click",()=>{quickIds.allStable.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
+document.getElementById("quickSelectCore").addEventListener("click",()=>{quickIds.starred.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
 renderFilterBar();renderGrid();
 </script>
 </body>
