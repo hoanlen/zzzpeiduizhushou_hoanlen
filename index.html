@@ -167,6 +167,40 @@ body{
 .footer a:hover{opacity:0.8}
 .footer .disclaimer{margin-top:8px;font-size:0.688rem;color:var(--muted);opacity:0.5}
 
+/* Banner Calendar */
+.banner-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;overflow:hidden;position:relative}
+.banner-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),var(--brand),var(--amber))}
+.banner-header{padding:14px 16px 8px;display:flex;align-items:center;justify-content:space-between}
+.banner-header .bh{font-size:0.938rem;font-weight:700}
+.banner-header .bh-date{font-size:0.688rem;color:var(--muted)}
+.banner-row{padding:0 16px 14px}
+.banner-group{margin-bottom:12px}
+.banner-group:last-child{margin-bottom:0}
+.banner-group-label{font-size:0.75rem;font-weight:700;color:var(--amber);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.banner-group-label .dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:var(--amber)}
+.banner-group-label .dot.active{background:#4ade80;box-shadow:0 0 6px rgba(74,222,128,0.5)}
+.banner-group-label .dot.ended{background:var(--muted)}
+.banner-group-label .dot.upcoming{background:var(--blue)}
+.banner-chars{display:flex;gap:8px;flex-wrap:wrap}
+.banner-char{display:flex;align-items:center;gap:8px;background:var(--surface2);border-radius:10px;padding:8px 10px;flex:1;min-width:0;position:relative;overflow:hidden}
+.banner-char.passed{opacity:0.4}
+.banner-char .bci{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.banner-char .bci img{width:100%;height:100%;object-fit:cover}
+.banner-char .bc-info{flex:1;min-width:0}
+.banner-char .bc-name{font-size:0.75rem;font-weight:700}
+.banner-char .bc-role{font-size:0.562rem;color:var(--muted)}
+.banner-char .bc-status{font-size:0.562rem;font-weight:600;flex-shrink:0;padding:2px 8px;border-radius:4px}
+.bc-status.active{background:rgba(74,222,128,0.12);color:#4ade80}
+.bc-status.ended{background:rgba(239,68,68,0.12);color:#f87171}
+.bc-status.upcoming{background:rgba(96,165,250,0.12);color:#60a5fa}
+.banner-char .bc-tip{font-size:0.562rem;color:var(--muted);line-height:1.5;margin-top:2px}
+.banner-char .bc-expand{font-size:0.5rem;color:var(--brand);cursor:pointer;text-decoration:underline;flex-shrink:0}
+.banner-analysis{display:none;padding:0 16px 14px}
+.banner-analysis.show{display:block}
+.banner-analysis .ba-box{background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.1);border-radius:8px;padding:10px 12px}
+.banner-analysis .ba-title{font-size:0.688rem;font-weight:700;color:var(--brand);margin-bottom:4px}
+.banner-analysis .ba-text{font-size:0.625rem;color:var(--muted);line-height:1.7}
+
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
   .char-card .avatar-wrap{width:42px;height:42px}
@@ -213,6 +247,15 @@ body{
       </label>
   </div>
 
+  <div class="banner-section" id="bannerSection">
+    <div class="banner-header">
+      <span class="bh">📅 卡池时间表</span>
+      <span class="bh-date" id="bannerDate"></span>
+    </div>
+    <div class="banner-row" id="bannerContent"></div>
+    <div class="banner-analysis" id="bannerAnalysis"></div>
+  </div>
+
   <div class="section">
     <div class="section-label">🎮 选你的角色</div>
     <span class="section-hint" id="countDisplay">已选 0 个</span>
@@ -256,8 +299,8 @@ body{
 
 <script>
 const allChars = [
-  {id:"dan",name:"蕾米埃尔",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/蕾米埃尔.png",role:"异常",tier:"S"},
   {id:"xigelide",name:"希格莉德",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/希格莉德.png",role:"强攻",tier:"S"},
+  {id:"dan",name:"蕾米埃尔",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/蕾米埃尔.png",role:"异常",tier:"S"},
   {id:"nuomu",name:"诺姆",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/诺姆.png",role:"击破",tier:"S"},
   {id:"weilinna",name:"维琳娜",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/维琳娜.png",role:"异常",tier:"S"},
   {id:"peiluoyisi",name:"佩洛伊斯",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/佩洛伊斯.png",role:"强攻",tier:"S"},
@@ -292,6 +335,93 @@ const quickIds={
   starred:["dan","xigelide","nuomu","liuyin","weilinna","peiluoyisi","yeshiguang"],
 };
 
+// ===== 卡池数据（手动维护，基于日期自动判断状态）=====
+const bannerGroups=[
+  {
+    label:"3.1上半 · 新角色UP",
+    start:"2026-07-01",end:"2026-07-21",
+    chars:[
+      {id:"xigelide",tip:"",analysis:"（待你补充分析文案）"},
+      {id:"dan",tip:"",analysis:"（待你补充分析文案）"},
+    ]
+  },
+  {
+    label:"3.1下半 · 新角色UP",
+    start:"2026-07-21",end:"2026-08-11",
+    chars:[
+      {id:"nuomu",tip:"",analysis:"（待你补充分析文案）"},
+      {id:"weilinna",tip:"",analysis:"（待你补充分析文案）"},
+    ]
+  },
+  {
+    label:"3.0 复刻角色",
+    start:"2026-07-01",end:"2026-08-11",
+    chars:[
+      {id:"yeshiguang",tip:"3.0上半复刻",analysis:"（待你补充分析文案）"},
+      {id:"qianxia",tip:"3.0下半复刻",analysis:"（待你补充分析文案）"},
+    ]
+  },
+];
+
+function getBannerStatus(group){
+  const now=new Date();now.setHours(0,0,0,0);
+  const s=new Date(group.start);s.setHours(0,0,0,0);
+  const e=new Date(group.end);e.setHours(23,59,59,0);
+  if(now<new Date(group.start))return"upcoming";
+  if(now>e)return"ended";
+  return"active";
+}
+
+function renderBanners(){
+  const el=document.getElementById("bannerContent");
+  const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
+  let html="";
+  const now=new Date();now.setHours(0,0,0,0);
+  document.getElementById("bannerDate").textContent=now.toLocaleDateString("zh-CN",{month:"long",day:"numeric",weekday:"long"});
+  bannerGroups.forEach(g=>{
+    const st=getBannerStatus(g);
+    const statusText={active:"进行中",ended:"已结束",upcoming:"即将开启"};
+    const stCls={active:"active",ended:"ended",upcoming:"upcoming"};
+    html+=`<div class="banner-group"><div class="banner-group-label"><span class="dot ${stCls[st]}"></span>${g.label} <span style="font-size:0.562rem;color:var(--muted);font-weight:400">${g.start} ~ ${g.end}</span>`;
+    if(st!=="active")html+=` <span style="font-size:0.562rem;font-weight:400;color:${st==="ended"?"var(--red)":"var(--blue)"}">${statusText[st]}</span>`;
+    html+=`</div><div class="banner-chars">`;
+    g.chars.forEach(ch=>{
+      const ci=info[ch.id];if(!ci)return;
+      const rt=roleTags[ci.role]||"";
+      const passed=st==="ended"?"passed":"";
+      const statusLabel=st==="active"?"UP中":(st==="ended"?"已结束":"即将UP");
+      const stCl=st==="active"?"active":(st==="ended"?"ended":"upcoming");
+      const key=`${g.label}-${ch.id}`;
+      html+=`<div class="banner-char ${passed}" data-key="${key}">
+        <div class="bci"><img src="${ci.img}" loading="lazy"></div>
+        <div class="bc-info">
+          <div class="bc-name">${ci.name}</div>
+          <div class="bc-role"><span class="tag ${rt}" style="font-size:0.5rem;padding:1px 5px">${ci.role}</span></div>
+        </div>
+        <span class="bc-status ${stCl}">${statusLabel}</span>
+        ${ch.tip?`<span style="font-size:0.5rem;color:var(--muted);flex-shrink:0;margin-left:4px">${ch.tip}</span>`:""}
+        <span class="bc-expand">详情</span>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  el.innerHTML=html;
+
+  // Click to expand analysis
+  document.querySelectorAll(".banner-char").forEach(el=>{
+    el.addEventListener("click",()=>{
+      const key=el.dataset.key;
+      const analysisEl=document.getElementById("bannerAnalysis");
+      const allBannerChars=[];
+      bannerGroups.forEach(g=>g.chars.forEach(ch=>{const ci=info[ch.id];if(ci)allBannerChars.push({...ch,label:g.label,info:ci});}));
+      const found=allBannerChars.find((_,i)=>`${bannerGroups.flatMap(g=>g.chars.map(c=>`${g.label}-${c.id}`))[i]}`===key);
+      if(!found)return;
+      analysisEl.innerHTML=`<div class="ba-box"><div class="ba-title">${found.info.name} · 抽取建议</div><div class="ba-text">${found.analysis}</div></div>`;
+      analysisEl.classList.add("show");
+    });
+  });
+}
+
 const teamRules={
   defaultAtk:{second:["nuomu","liuyin","laikaen","nangongyu","keleida","anbi"],third:["nike","qianxia","yaojiayin","lina","zhao","luxi","cangjiao"]},
   yeshiguang:{
@@ -314,7 +444,7 @@ function renderFilterBar(){
   const bar=document.getElementById("filterBar");
   bar.innerHTML=filterRoles.map(r=>`<button class="filter-chip ${r===filterRole?'active':''} ${r==='全部'?'all':''}" data-role="${r}">${r}</button>`).join("");
   bar.querySelectorAll(".filter-chip").forEach(el=>{
-    el.addEventListener("click",()=>{filterRole=el.dataset.role;renderFilterBar();renderGrid();});
+    el.addEventListener("click",()=>{filterRole=el.dataset.role;renderFilterBar();renderGrid();renderBanners();});
   });
 }
 
