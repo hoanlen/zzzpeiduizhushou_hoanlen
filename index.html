@@ -253,20 +253,18 @@ body{
     <div class="rule-line">
       <strong>⚡ 警告：</strong>下一个限定击破可能半年后才出。向前看选诺姆，向后看选琉音。老击破强度不够了。佩洛伊斯大招喧响2000，策划警告你了。琉音后面会越来越不适配3.0角色。
     </div>
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:4px">⚠️ 简0命不建议玩，2命才能玩。0命简不如柏妮思、派派。绝区零美术骑着策划上班，端水一直端不平。你们喜欢的角色一定会被策划拿来拉踩的，除非只喜欢主推角色。3.0策划针对一个两年前的角色，策划牛逼。虚狩厨是对的，大大方方虚狩叙事。最尊重主推角色的二游。</p>
-    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">关于简的待遇问题有助于新手理解本游戏该如何抽卡，你们说是吧，艾莲朱鸢青衣凯撒悠真。</p>
-     <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
     <label class="consent-label">
         <input type="checkbox" id="consentCheck"> <span style="color:var(--red);font-weight:700;margin-right:2px">*</span> 我已经通读作者的建议
       </label>
   </div>
 
   <div class="tab-bar">
-    <button class="tab-btn active" data-tab="team">⚔️ 配队助手</button>
-    <button class="tab-btn" data-tab="banner">📅 卡池建议</button>
+    <button class="tab-btn active" data-tab="banner">📅 卡池建议</button>
+    <button class="tab-btn" data-tab="team">⚔️ 配队助手</button>
   </div>
 
-  <div class="tab-panel active" id="tabTeam">
+  <div class="tab-panel" id="tabTeam">
 
   <div class="section">
     <div class="section-label">🎮 选你的角色</div>
@@ -281,7 +279,7 @@ body{
   <div class="char-grid" id="charGrid"></div>
 
   <div class="dps-picker" id="dpsPicker">
-    <div class="dp">👑 选3个主C（从你选的强攻/异常角色中选）<br><span style="font-size:0.688rem;color:var(--muted);font-weight:400">⚠️ 简0命不行，2命才能玩，新手不要选</span></div>
+    <div class="dp">👑 选3个主C（从你选的强攻/异常角色中选）</div>
     <div class="dps-grid" id="dpsGrid"></div>
     <button class="confirm-dps" id="confirmDps" disabled>确认生成配队</button>
     <div style="text-align:center;margin-top:10px"><button class="quick-btn" id="cancelDps" style="display:inline;width:auto;padding:4px 16px;margin:0">取消</button></div>
@@ -295,7 +293,7 @@ body{
   <button class="reset-btn" id="resetBtn">清空所有选择</button>
 </div>
 
-<div class="tab-panel" id="tabBanner">
+<div class="tab-panel active" id="tabBanner">
   <div class="tab-banner">
     <div class="banner-section">
       <div class="banner-header">
@@ -378,7 +376,7 @@ const charAdvice={
   youye:{rate:"推荐",text:"限定支援，强度在线"},
   bainisi:{rate:"不推荐",text:"0命不如派派，2命才值得"},
   yaojiayin:{rate:"推荐",text:"限定支援，泛用性不错"},
-  jian:{rate:"不推荐",text:"0命白板，2命才能玩，不建议新手碰"},
+  jian:{rate:"可选",text:"旧时代角色，强度已跟不上版本"},
   peiluoyisi:{rate:"推荐",text:"常驻战神，大世界/开荒好用"},
 };
 for(const c of allChars){
