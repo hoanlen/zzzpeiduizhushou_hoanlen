@@ -583,11 +583,13 @@ function renderBanners(){
     const rc=rateColors[ad.rate]||(ad.rate==="不抽"?"#f87171":"var(--amber)");
     const rcl=rateBg[ad.rate]||(ad.rate==="不抽"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
     const roleTag=rt[ci.role]||"";
+    const elemTag=elemTags[ci.element]||"";
     return `<div class="banner-char">
       <div class="bc-version">${ch.ver}</div>
       <div class="bci"><img src="${ci.img}" loading="lazy"></div>
       <div class="bc-info">
-        <div class="bc-name">${ci.name} <span class="tag ${roleTag}" style="font-size:0.5rem;padding:1px 6px;vertical-align:middle">${ci.role}</span></div>
+        <div class="bc-name">${ci.name}</div>
+        <div style="display:flex;gap:3px;margin-top:2px;flex-wrap:wrap"><span class="tag ${elemTag}" style="font-size:0.437rem;padding:1px 5px">${ci.element}</span><span class="tag ${roleTag}" style="font-size:0.437rem;padding:1px 5px">${ci.role}</span></div>
         <div class="bc-advice">${ad.text}</div>
       </div>
       <span class="bc-rate" style="color:${rc};background:${rcl}">${ad.rate}</span>
