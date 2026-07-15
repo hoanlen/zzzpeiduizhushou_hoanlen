@@ -201,6 +201,22 @@ body{
 .banner-analysis .ba-title{font-size:0.688rem;font-weight:700;color:var(--brand);margin-bottom:4px}
 .banner-analysis .ba-text{font-size:0.625rem;color:var(--muted);line-height:1.7}
 
+/* Tab bar */
+.tab-bar{display:flex;gap:0;margin-bottom:18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tab-btn{flex:1;padding:10px;border:none;background:transparent;color:var(--muted);font-size:0.75rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;position:relative}
+.tab-btn.active{background:rgba(139,92,246,0.08);color:var(--brand)}
+.tab-btn:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--border)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+/* Banner only inside tab2 */
+.tab-banner .banner-section{margin-bottom:0}
+.tab-banner .banner-chars{flex-direction:column}
+.tab-banner .banner-char{cursor:default}
+.tab-banner .banner-char .bc-expand{display:none}
+.tab-banner .ba-box{background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.1);border-radius:8px;padding:10px 12px;margin-bottom:10px;cursor:pointer;transition:all 0.15s}
+.tab-banner .ba-box:hover{border-color:rgba(139,92,246,0.3)}
+.tab-banner .ba-box .ba-text{font-size:0.688rem}
+
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
   .char-card .avatar-wrap{width:42px;height:42px}
@@ -237,8 +253,6 @@ body{
     <div class="rule-line">
       <strong>⚡ 警告：</strong>下一个限定击破可能半年后才出。向前看选诺姆，向后看选琉音。老击破强度不够了。佩洛伊斯大招喧响2000，策划警告你了。琉音后面会越来越不适配3.0角色。
     </div>
-    <p><strong>推荐关注的输出角色：</strong>蕾米埃尔、希格莉德、维琳娜、佩洛伊斯、叶瞬光</p>
-    <p><strong>推荐关注的击破角色：</strong>琉音、诺姆</p>
     <p style="font-size:0.75rem;color:var(--muted);margin-top:4px">⚠️ 简0命不建议玩，2命才能玩。0命简不如柏妮思、派派。绝区零美术骑着策划上班，端水一直端不平。你们喜欢的角色一定会被策划拿来拉踩的，除非只喜欢主推角色。3.0策划针对一个两年前的角色，策划牛逼。虚狩厨是对的，大大方方虚狩叙事。最尊重主推角色的二游。</p>
     <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">关于简的待遇问题有助于新手理解本游戏该如何抽卡，你们说是吧，艾莲朱鸢青衣凯撒悠真。</p>
      <p style="font-size:0.75rem;color:var(--muted);margin-top:2px">策划看着玩家的二命简，笑呵呵地说：&ldquo;负二命角色也有人玩，真是笑嘻了。&rdquo;</p>
@@ -247,14 +261,12 @@ body{
       </label>
   </div>
 
-  <div class="banner-section" id="bannerSection">
-    <div class="banner-header">
-      <span class="bh">📅 卡池时间表</span>
-      <span class="bh-date" id="bannerDate"></span>
-    </div>
-    <div class="banner-row" id="bannerContent"></div>
-    <div class="banner-analysis" id="bannerAnalysis"></div>
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="team">⚔️ 配队助手</button>
+    <button class="tab-btn" data-tab="banner">📅 卡池建议</button>
   </div>
+
+  <div class="tab-panel active" id="tabTeam">
 
   <div class="section">
     <div class="section-label">🎮 选你的角色</div>
@@ -281,8 +293,22 @@ body{
 
   <div class="result" id="result"></div>
   <button class="reset-btn" id="resetBtn">清空所有选择</button>
+</div>
 
-  <div class="footer">
+<div class="tab-panel" id="tabBanner">
+  <div class="tab-banner">
+    <div class="banner-section">
+      <div class="banner-header">
+        <span class="bh">📅 卡池时间表</span>
+        <span class="bh-date" id="bannerDate"></span>
+      </div>
+      <div class="banner-row" id="bannerContent"></div>
+      <div class="banner-advice" id="bannerAdvice"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
     <a href="https://space.bilibili.com/7683612" target="_blank">B站：虹棱Hoanlen</a> ｜
     <a href="https://v.douyin.com/TEcdClvA9SY/" target="_blank">抖音：虹棱Hoanlen</a><br>
     <div class="disclaimer">视觉设计由AI生成，配队逻辑由作者编写，纯主观游戏理解</div>
@@ -335,7 +361,42 @@ const quickIds={
   starred:["dan","xigelide","nuomu","liuyin","weilinna","peiluoyisi","yeshiguang"],
 };
 
-// ===== 卡池数据（手动维护，基于日期自动判断状态）=====
+// ===== 角色抽取建议数据库（在配队结果中显示）=====
+const charAdvice={
+  xigelide:{rate:"强烈推荐",text:"3.1版本最强强攻主C，00即完全体，缺主C直接拿"},
+  dan:{rate:"推荐",text:"异常队核心，00带队毕业，配维琳娜更佳"},
+  nuomu:{rate:"强烈推荐",text:"版本最强限定击破，00性价比之王"},
+  weilinna:{rate:"推荐",text:"异常队拼图，有蕾米埃尔建议拿"},
+  puluomiya:{rate:"推荐",text:"异常C但配击破玩更顺手，00够用"},
+  nangongyu:{rate:"推荐",text:"限定击破，手感好，狼哥上位替代"},
+  luxiya:{rate:"推荐",text:"限定支援，通辅泛用"},
+  airui:{rate:"推荐",text:"异常C，配击破+支援玩"},
+  qianxia:{rate:"强烈推荐",text:"顶级通用支援，进任何队都好用"},
+  yeshiguang:{rate:"强烈推荐",text:"不吃配置的强攻C，00毕业，万能填空"},
+  zhao:{rate:"可选",text:"防护角色，特定场景对策卡"},
+  liuyin:{rate:"推荐",text:"击破角色，复刻看需求抽"},
+  youye:{rate:"推荐",text:"限定支援，强度在线"},
+  bainisi:{rate:"不推荐",text:"0命不如派派，2命才值得"},
+  yaojiayin:{rate:"推荐",text:"限定支援，泛用性不错"},
+  jian:{rate:"不推荐",text:"0命白板，2命才能玩，不建议新手碰"},
+  peiluoyisi:{rate:"推荐",text:"常驻战神，大世界/开荒好用"},
+};
+for(const c of allChars){
+  if(!charAdvice[c.id]){
+    const tierMap={"S":"推荐","A":"可选"};
+    charAdvice[c.id]={rate:tierMap[c.tier]||"可选",text:`${c.role}角色，根据需要选`};
+  }
+}
+
+// ===== Tab 切换 =====
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(`tab${btn.dataset.tab==="team"?"Team":"Banner"}`).classList.add("active");
+  });
+});
 const bannerGroups=[
   {
     label:"3.1上半 · 新角色UP",
@@ -374,6 +435,7 @@ function getBannerStatus(group){
 
 function renderBanners(){
   const el=document.getElementById("bannerContent");
+  const adviceEl=document.getElementById("bannerAdvice");
   const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
   let html="";
   const now=new Date();now.setHours(0,0,0,0);
@@ -391,35 +453,23 @@ function renderBanners(){
       const passed=st==="ended"?"passed":"";
       const statusLabel=st==="active"?"UP中":(st==="ended"?"已结束":"即将UP");
       const stCl=st==="active"?"active":(st==="ended"?"ended":"upcoming");
-      const key=`${g.label}-${ch.id}`;
-      html+=`<div class="banner-char ${passed}" data-key="${key}">
+      const ad=charAdvice[ch.id];
+      const rateColor=ad.rate==="强烈推荐"?"#4ade80":(ad.rate==="不推荐"?"#f87171":"var(--amber)");
+      html+=`<div class="banner-char ${passed}">
         <div class="bci"><img src="${ci.img}" loading="lazy"></div>
         <div class="bc-info">
           <div class="bc-name">${ci.name}</div>
           <div class="bc-role"><span class="tag ${rt}" style="font-size:0.5rem;padding:1px 5px">${ci.role}</span></div>
+          <div style="font-size:0.5rem;color:${rateColor};margin-top:2px">${ad.text}</div>
         </div>
         <span class="bc-status ${stCl}">${statusLabel}</span>
         ${ch.tip?`<span style="font-size:0.5rem;color:var(--muted);flex-shrink:0;margin-left:4px">${ch.tip}</span>`:""}
-        <span class="bc-expand">详情</span>
+        <span style="font-size:0.5rem;font-weight:700;color:${rateColor};flex-shrink:0">${ad.rate}</span>
       </div>`;
     });
     html+=`</div></div>`;
   });
   el.innerHTML=html;
-
-  // Click to expand analysis
-  document.querySelectorAll(".banner-char").forEach(el=>{
-    el.addEventListener("click",()=>{
-      const key=el.dataset.key;
-      const analysisEl=document.getElementById("bannerAnalysis");
-      const allBannerChars=[];
-      bannerGroups.forEach(g=>g.chars.forEach(ch=>{const ci=info[ch.id];if(ci)allBannerChars.push({...ch,label:g.label,info:ci});}));
-      const found=allBannerChars.find((_,i)=>`${bannerGroups.flatMap(g=>g.chars.map(c=>`${g.label}-${c.id}`))[i]}`===key);
-      if(!found)return;
-      analysisEl.innerHTML=`<div class="ba-box"><div class="ba-title">${found.info.name} · 抽取建议</div><div class="ba-text">${found.analysis}</div></div>`;
-      analysisEl.classList.add("show");
-    });
-  });
 }
 
 const teamRules={
@@ -631,10 +681,13 @@ function renderTeams(teams){
       const info=allChars.find(x=>x.id===s.id);
       const rt=roleTags[info?info.role:""]||"";
       const mc=s.main?"main":"";const sc=s.main?"":"swapable";
+      const ad=info?charAdvice[info.id]:null;
+      const adCl=ad&&ad.rate==="强烈推荐"?"#4ade80":(ad&&ad.rate==="不推荐"?"#f87171":"var(--amber)");
       html+=`<div class="slot ${mc} ${sc}" data-team="${i}" data-slot="${j}" data-id="${s.id}">
         <div class="si"><img src="${info?info.img:''}" loading="lazy"></div>
         <div class="sn">${info?info.name:s.id}</div>
         <span class="sr tag ${rt}">${s.main?"主C":info?info.role:''}</span>
+        ${ad?`<span style="display:block;font-size:0.437rem;font-weight:700;color:${adCl};margin-top:2px;line-height:1.2">${ad.rate}</span>`:""}
       </div>`;
     });
     html+=`</div></div>`;
