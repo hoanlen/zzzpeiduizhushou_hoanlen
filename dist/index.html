@@ -210,12 +210,16 @@ body{
 .tab-panel.active{display:block}
 /* Banner only inside tab2 */
 .tab-banner .banner-section{margin-bottom:0}
-.tab-banner .banner-chars{flex-direction:column}
-.tab-banner .banner-char{cursor:default}
-.tab-banner .banner-char .bc-expand{display:none}
-.tab-banner .ba-box{background:rgba(139,92,246,0.04);border:1px solid rgba(139,92,246,0.1);border-radius:8px;padding:10px 12px;margin-bottom:10px;cursor:pointer;transition:all 0.15s}
-.tab-banner .ba-box:hover{border-color:rgba(139,92,246,0.3)}
-.tab-banner .ba-box .ba-text{font-size:0.688rem}
+.tab-banner .banner-chars{display:flex;flex-direction:column;gap:8px}
+.tab-banner .banner-char{display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:12px;padding:10px 12px;cursor:default;transition:all 0.15s}
+.tab-banner .banner-char:hover{background:rgba(139,92,246,0.06)}
+.tab-banner .banner-char .bc-version{font-size:0.562rem;font-weight:700;color:var(--amber);flex-shrink:0;min-width:52px;text-align:center;padding:3px 6px;background:rgba(245,158,11,0.08);border-radius:6px}
+.tab-banner .banner-char .bci{width:38px;height:38px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--border)}
+.tab-banner .banner-char .bci img{width:100%;height:100%;object-fit:cover}
+.tab-banner .banner-char .bc-info{flex:1;min-width:0}
+.tab-banner .banner-char .bc-name{font-size:0.75rem;font-weight:700}
+.tab-banner .banner-char .bc-advice{font-size:0.562rem;color:var(--muted);margin-top:1px;line-height:1.4}
+.tab-banner .banner-char .bc-rate{font-size:0.5rem;font-weight:700;flex-shrink:0;padding:2px 8px;border-radius:4px}
 
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
@@ -297,11 +301,9 @@ body{
   <div class="tab-banner">
     <div class="banner-section">
       <div class="banner-header">
-        <span class="bh">📅 卡池时间表</span>
-        <span class="bh-date" id="bannerDate"></span>
+        <span class="bh">📅 卡池建议</span>
       </div>
       <div class="banner-row" id="bannerContent"></div>
-      <div class="banner-advice" id="bannerAdvice"></div>
     </div>
   </div>
 </div>
@@ -395,79 +397,33 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
     document.getElementById(`tab${btn.dataset.tab==="team"?"Team":"Banner"}`).classList.add("active");
   });
 });
-const bannerGroups=[
-  {
-    label:"3.1上半 · 新角色UP",
-    start:"2026-07-01",end:"2026-07-21",
-    chars:[
-       {id:"xigelide",tip:"",analysis:"3.1版本最强强攻主C，机制完整0命即完全体。手感和伤害都在线，搭配击破角色就能打出高爆发。新手缺主C的话建议00拿下，完全不亏。"},
-       {id:"dan",tip:"",analysis:"异常队指定大C，3异常队伍的核心。0命已经能打出可观伤害，2命解锁更多玩法但非必须。如果你有维琳娜或者其他异常队友，00蕾米埃尔直接带队毕业一队。"},
-     ]
-   },
-   {
-     label:"3.1下半 · 新角色UP",
-     start:"2026-07-21",end:"2026-08-11",
-     chars:[
-       {id:"nuomu",tip:"",analysis:"3.0版本后最强的限定击破角色。击破效率高、手感顺滑、辅助能力在线。之前说的'向前看选诺姆'，他就是那个答案。新手缺击破的话00诺姆是性价比最高的选择。"},
-       {id:"weilinna",tip:"",analysis:"异常副C/辅助，和蕾米埃尔高度绑定。0命就有不错的后台异常积蓄能力，搭配蕾米埃尔可以直接成型一队异常队。如果你有蕾米埃尔或者打算抽蕾米，维琳娜建议拿下。"},
-     ]
-   },
-   {
-     label:"3.0 复刻角色",
-     start:"2026-07-01",end:"2026-08-11",
-     chars:[
-       {id:"yeshiguang",tip:"3.0上半复刻",analysis:"强攻主C，不吃配置不吃队友，0命即毕业。配队灵活度极高（千夏/琉音/照都可以），新手拿了可以直接塞进任何缺人的队伍里。如果你还没有主C，叶瞬光是最省心的选择。"},
-       {id:"qianxia",tip:"3.0下半复刻",analysis:"顶级通用支援角色，进任何队伍都能发挥价值。0命加攻击加增伤，覆盖面广。如果你缺支援角色或者想提升队伍上限，千夏00入股不亏。"},
-     ]
-   },
+const bannerChars=[
+  {id:"xigelide",ver:"3.1·下半"},
+  {id:"dan",ver:"3.1·上半"},
+  {id:"weilinna",ver:"3.0·上半"},
+  {id:"nuomu",ver:"3.0·下半"},
+  {id:"yeshiguang",ver:"3.0·复刻"},
+  {id:"qianxia",ver:"3.0·复刻"},
 ];
-
-function getBannerStatus(group){
-  const now=new Date();now.setHours(0,0,0,0);
-  const s=new Date(group.start);s.setHours(0,0,0,0);
-  const e=new Date(group.end);e.setHours(23,59,59,0);
-  if(now<new Date(group.start))return"upcoming";
-  if(now>e)return"ended";
-  return"active";
-}
 
 function renderBanners(){
   const el=document.getElementById("bannerContent");
-  const adviceEl=document.getElementById("bannerAdvice");
   const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
-  let html="";
-  const now=new Date();now.setHours(0,0,0,0);
-  document.getElementById("bannerDate").textContent=now.toLocaleDateString("zh-CN",{month:"long",day:"numeric",weekday:"long"});
-  bannerGroups.forEach(g=>{
-    const st=getBannerStatus(g);
-    const statusText={active:"进行中",ended:"已结束",upcoming:"即将开启"};
-    const stCls={active:"active",ended:"ended",upcoming:"upcoming"};
-    html+=`<div class="banner-group"><div class="banner-group-label"><span class="dot ${stCls[st]}"></span>${g.label} <span style="font-size:0.562rem;color:var(--muted);font-weight:400">${g.start} ~ ${g.end}</span>`;
-    if(st!=="active")html+=` <span style="font-size:0.562rem;font-weight:400;color:${st==="ended"?"var(--red)":"var(--blue)"}">${statusText[st]}</span>`;
-    html+=`</div><div class="banner-chars">`;
-    g.chars.forEach(ch=>{
-      const ci=info[ch.id];if(!ci)return;
-      const rt=roleTags[ci.role]||"";
-      const passed=st==="ended"?"passed":"";
-      const statusLabel=st==="active"?"UP中":(st==="ended"?"已结束":"即将UP");
-      const stCl=st==="active"?"active":(st==="ended"?"ended":"upcoming");
-      const ad=charAdvice[ch.id];
-      const rateColor=ad.rate==="强烈推荐"?"#4ade80":(ad.rate==="不推荐"?"#f87171":"var(--amber)");
-      html+=`<div class="banner-char ${passed}">
-        <div class="bci"><img src="${ci.img}" loading="lazy"></div>
-        <div class="bc-info">
-          <div class="bc-name">${ci.name}</div>
-          <div class="bc-role"><span class="tag ${rt}" style="font-size:0.5rem;padding:1px 5px">${ci.role}</span></div>
-          <div style="font-size:0.5rem;color:${rateColor};margin-top:2px">${ad.text}</div>
-        </div>
-        <span class="bc-status ${stCl}">${statusLabel}</span>
-        ${ch.tip?`<span style="font-size:0.5rem;color:var(--muted);flex-shrink:0;margin-left:4px">${ch.tip}</span>`:""}
-        <span style="font-size:0.5rem;font-weight:700;color:${rateColor};flex-shrink:0">${ad.rate}</span>
-      </div>`;
-    });
-    html+=`</div></div>`;
-  });
-  el.innerHTML=html;
+  el.innerHTML=`<div class="banner-chars">`+bannerChars.map(ch=>{
+    const ci=info[ch.id];if(!ci)return"";
+    const ad=charAdvice[ch.id];
+    const rc=ad.rate==="强烈推荐"?"#4ade80":(ad.rate==="不推荐"?"#f87171":"var(--amber)");
+    const rcl=ad.rate==="强烈推荐"?"rgba(74,222,128,0.12)":(ad.rate==="不推荐"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
+    return `<div class="banner-char">
+      <div class="bc-version">${ch.ver}</div>
+      <div class="bci"><img src="${ci.img}" loading="lazy"></div>
+      <div class="bc-info">
+        <div class="bc-name">${ci.name}</div>
+        <div class="bc-advice">${ad.text}</div>
+      </div>
+      <span class="bc-rate" style="color:${rc};background:${rcl}">${ad.rate}</span>
+    </div>`;
+  }).join("")+`</div>`;
 }
 
 const teamRules={
