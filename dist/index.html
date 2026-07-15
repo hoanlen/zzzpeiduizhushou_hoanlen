@@ -362,30 +362,30 @@ const quickIds={
   starred:["dan","xigelide","nuomu","liuyin","weilinna","peiluoyisi","yeshiguang"],
 };
 
-// ===== 角色抽取建议数据库（在配队结果中显示）=====
+// ===== 角色抽取建议数据库 =====
 const charAdvice={
-  xigelide:{rate:"强烈推荐",text:"3.1版本最强强攻主C，00即完全体，缺主C直接拿"},
+  xigelide:{rate:"必抽",text:"3.1最强强攻主C，00完全体，缺C直接拿"},
   dan:{rate:"推荐",text:"异常队核心，00带队毕业，配维琳娜更佳"},
-  nuomu:{rate:"强烈推荐",text:"版本最强限定击破，00性价比之王"},
+  nuomu:{rate:"必抽",text:"版本最强限定击破，00性价比之王"},
   weilinna:{rate:"推荐",text:"异常队拼图，有蕾米埃尔建议拿"},
-  puluomiya:{rate:"推荐",text:"异常C但配击破玩更顺手，00够用"},
+  puluomiya:{rate:"可抽",text:"异常C但配击破玩更顺手，00够用"},
   nangongyu:{rate:"推荐",text:"限定击破，手感好，狼哥上位替代"},
-  luxiya:{rate:"推荐",text:"限定支援，通辅泛用"},
-  airui:{rate:"推荐",text:"异常C，配击破+支援玩"},
-  qianxia:{rate:"强烈推荐",text:"顶级通用支援，进任何队都好用"},
-  yeshiguang:{rate:"强烈推荐",text:"不吃配置的强攻C，00毕业，万能填空"},
-  zhao:{rate:"可选",text:"防护角色，特定场景对策卡"},
-  liuyin:{rate:"推荐",text:"击破角色，复刻看需求抽"},
-  youye:{rate:"推荐",text:"限定支援，强度在线"},
-  bainisi:{rate:"不推荐",text:"0命不如派派，2命才值得"},
-  yaojiayin:{rate:"推荐",text:"限定支援，泛用性不错"},
-  jian:{rate:"可选",text:"旧时代角色，强度已跟不上版本"},
-  peiluoyisi:{rate:"推荐",text:"常驻战神，大世界/开荒好用"},
+  luxiya:{rate:"可抽",text:"限定支援，通辅泛用"},
+  airui:{rate:"可抽",text:"异常C，配击破+支援玩"},
+  qianxia:{rate:"推荐",text:"顶级通用支援，进任何队都好用"},
+  yeshiguang:{rate:"必抽",text:"万能强攻C，00毕业，新手最省心选择"},
+  zhao:{rate:"可抽",text:"防护角色，特定场景对策卡"},
+  liuyin:{rate:"可抽",text:"老击破，有叶瞬光才考虑"},
+  youye:{rate:"可抽",text:"限定支援，强度在线"},
+  bainisi:{rate:"不抽",text:"0命不如派派，2命才值得"},
+  yaojiayin:{rate:"可抽",text:"限定支援，泛用性不错"},
+  jian:{rate:"不抽",text:"旧时代角色，已跟不上版本"},
+  peiluoyisi:{rate:"推荐",text:"常驻战神，大世界开荒好用"},
 };
 for(const c of allChars){
   if(!charAdvice[c.id]){
-    const tierMap={"S":"推荐","A":"可选"};
-    charAdvice[c.id]={rate:tierMap[c.tier]||"可选",text:`${c.role}角色，根据需要选`};
+    const tierMap={"S":"可抽","A":"可抽"};
+    charAdvice[c.id]={rate:tierMap[c.tier]||"可抽",text:`${c.role}角色，根据需要选`};
   }
 }
 
@@ -399,8 +399,11 @@ document.querySelectorAll(".tab-btn").forEach(btn=>{
   });
 });
 const bannerChars=[
-  {id:"xigelide",ver:"3.1·下半"},
   {id:"dan",ver:"3.1·上半"},
+  {id:"xigelide",ver:"3.1·下半"},
+  {id:"placeholder1",ver:"3.1·复刻",placeholder:"角色待定"},
+  {id:"placeholder2",ver:"3.1·复刻",placeholder:"角色待定"},
+  {id:"placeholder3",ver:"3.1·复刻",placeholder:"角色待定"},
   {id:"weilinna",ver:"3.0·上半"},
   {id:"nuomu",ver:"3.0·下半"},
   {id:"yeshiguang",ver:"3.0·复刻"},
@@ -410,16 +413,28 @@ const bannerChars=[
 function renderBanners(){
   const el=document.getElementById("bannerContent");
   const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
+  const rt=roleTags;
   el.innerHTML=`<div class="banner-chars">`+bannerChars.map(ch=>{
+    // Handle placeholder
+    if(ch.placeholder){
+      return `<div class="banner-char" style="opacity:0.35">
+        <div class="bc-version">${ch.ver}</div>
+        <div class="bci" style="display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--muted)">?</div>
+        <div class="bc-info">
+          <div class="bc-name" style="color:var(--muted)">${ch.placeholder}</div>
+        </div>
+      </div>`;
+    }
     const ci=info[ch.id];if(!ci)return"";
     const ad=charAdvice[ch.id];
-    const rc=ad.rate==="强烈推荐"?"#4ade80":(ad.rate==="不推荐"?"#f87171":"var(--amber)");
-    const rcl=ad.rate==="强烈推荐"?"rgba(74,222,128,0.12)":(ad.rate==="不推荐"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
+    const rc=ad.rate==="必抽"?"#4ade80":(ad.rate==="不抽"?"#f87171":"var(--amber)");
+    const rcl=ad.rate==="必抽"?"rgba(74,222,128,0.12)":(ad.rate==="不抽"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
+    const roleTag=rt[ci.role]||"";
     return `<div class="banner-char">
       <div class="bc-version">${ch.ver}</div>
       <div class="bci"><img src="${ci.img}" loading="lazy"></div>
       <div class="bc-info">
-        <div class="bc-name">${ci.name}</div>
+        <div class="bc-name">${ci.name} <span class="tag ${roleTag}" style="font-size:0.5rem;padding:1px 6px;vertical-align:middle">${ci.role}</span></div>
         <div class="bc-advice">${ad.text}</div>
       </div>
       <span class="bc-rate" style="color:${rc};background:${rcl}">${ad.rate}</span>
@@ -449,7 +464,7 @@ function renderFilterBar(){
   const bar=document.getElementById("filterBar");
   bar.innerHTML=filterRoles.map(r=>`<button class="filter-chip ${r===filterRole?'active':''} ${r==='全部'?'all':''}" data-role="${r}">${r}</button>`).join("");
   bar.querySelectorAll(".filter-chip").forEach(el=>{
-    el.addEventListener("click",()=>{filterRole=el.dataset.role;renderFilterBar();renderGrid();renderBanners();});
+    el.addEventListener("click",()=>{filterRole=el.dataset.role;renderFilterBar();renderGrid();});
   });
 }
 
@@ -637,7 +652,7 @@ function renderTeams(teams){
       const rt=roleTags[info?info.role:""]||"";
       const mc=s.main?"main":"";const sc=s.main?"":"swapable";
       const ad=info?charAdvice[info.id]:null;
-      const adCl=ad&&ad.rate==="强烈推荐"?"#4ade80":(ad&&ad.rate==="不推荐"?"#f87171":"var(--amber)");
+      const adCl=ad&&ad.rate==="必抽"?"#4ade80":(ad&&ad.rate==="不抽"?"#f87171":"var(--amber)");
       html+=`<div class="slot ${mc} ${sc}" data-team="${i}" data-slot="${j}" data-id="${s.id}">
         <div class="si"><img src="${info?info.img:''}" loading="lazy"></div>
         <div class="sn">${info?info.name:s.id}</div>
@@ -686,7 +701,7 @@ document.getElementById("cancelDps").addEventListener("click",()=>{pickedDps=[];
 document.getElementById("swapCloseBtn").addEventListener("click",()=>{document.getElementById("swapOverlay").classList.remove("show");});
 document.getElementById("quickSelectAll").addEventListener("click",()=>{quickIds.allStable.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
 document.getElementById("quickSelectCore").addEventListener("click",()=>{quickIds.starred.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
-renderFilterBar();renderGrid();
+renderFilterBar();renderGrid();renderBanners();
 </script>
 </body>
 </html>
