@@ -24,7 +24,7 @@ body{
   -webkit-font-smoothing:antialiased;
   position:relative;
 }
-#bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(10,9,16,0.72),rgba(10,9,16,0.78)),url('https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/assets/bg.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat;z-index:0;pointer-events:none}
+#bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(rgba(10,9,16,0.72),rgba(10,9,16,0.78)),url('https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/assets/bg.webp');background-size:cover;background-position:center 30%;background-repeat:no-repeat;z-index:0;pointer-events:none}
 .container{max-width:480px;margin:0 auto;padding:16px 14px 40px;position:relative;z-index:1}
 
 .header{text-align:center;padding:32px 0 18px;position:relative;overflow:hidden}
@@ -334,34 +334,34 @@ body{
 
 <script>
 const allChars = [
-  {id:"xigelide",element:"冰",name:"希格莉德",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/希格莉德.png",role:"强攻",tier:"S"},
-  {id:"dan",element:"耀变",name:"蕾米埃尔",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/蕾米埃尔.png",role:"异常",tier:"S"},
-  {id:"nuomu",element:"火",name:"诺姆",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/诺姆.png",role:"击破",tier:"S"},
-  {id:"weilinna",element:"风",name:"维琳娜",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/维琳娜.png",role:"异常",tier:"S"},
-  {id:"peiluoyisi",element:"以太",name:"佩洛伊斯",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/佩洛伊斯.png",role:"强攻",tier:"S"},
-  {id:"puluomiya",element:"冰",name:"普罗米娅",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/普罗米娅.png",role:"异常",tier:"S"},
-  {id:"nangongyu",element:"以太",name:"南宫羽",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/南宫羽.png",role:"击破",tier:"S"},
-  {id:"luxiya",element:"以太",name:"卢西娅",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/卢西娅.png",role:"支援",tier:"S"},
-  {id:"airui",element:"以太",name:"爱芮",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/爱芮.png",role:"异常",tier:"S"},
-  {id:"qianxia",element:"物理",name:"千夏",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/千夏.png",role:"支援",tier:"S"},
-  {id:"yeshiguang",element:"物理",name:"叶瞬光",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/叶瞬光.png",role:"强攻",tier:"S"},
-  {id:"zhao",element:"冰",name:"照",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/照.png",role:"防护",tier:"S"},
-  {id:"liuyin",element:"物理",name:"琉音",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/琉音.png",role:"击破",tier:"S"},
-  {id:"youye",element:"物理",name:"柚叶",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/柚叶.png",role:"支援",tier:"S"},
-  {id:"bainisi",element:"火",name:"柏妮思",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/柏尼思.png",role:"异常",tier:"S"},
-  {id:"yaojiayin",element:"以太",name:"耀佳音",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/耀佳音.png",role:"支援",tier:"S"},
-  {id:"jian",element:"物理",name:"简",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/简.png",role:"异常",tier:"S"},
-  {id:"laikaen",element:"冰",name:"莱卡恩",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/莱卡恩.png",role:"击破",tier:"S"},
-  {id:"maoyou",element:"物理",name:"猫又",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/猫又.png",role:"强攻",tier:"S"},
-  {id:"lina",element:"电",name:"丽娜",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/丽娜.png",role:"支援",tier:"S"},
-  {id:"11hao",element:"火",name:"11号",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/11号.png",role:"强攻",tier:"S"},
-  {id:"gelisi",element:"电",name:"格莉丝",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/格莉丝.png",role:"异常",tier:"S"},
-  {id:"keleida",element:"火",name:"珂蕾妲",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/珂雷妲.png",role:"击破",tier:"S"},
-  {id:"paipai",element:"物理",name:"派派",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/派派.png",role:"异常",tier:"A"},
-  {id:"nike",element:"以太",name:"妮可",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/妮可.png",role:"支援",tier:"A"},
-  {id:"anbi",element:"电",name:"安比",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/安比.png",role:"击破",tier:"A"},
-  {id:"cangjiao",element:"冰",name:"苍角",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/苍角.png",role:"支援",tier:"A"},
-  {id:"luxi",element:"火",name:"露西",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/露西.png",role:"支援",tier:"A"},
+  {id:"xigelide",element:"冰",name:"希格莉德",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/希格莉德.webp",role:"强攻",tier:"S"},
+  {id:"dan",element:"耀变",name:"蕾米埃尔",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/蕾米埃尔.webp",role:"异常",tier:"S"},
+  {id:"nuomu",element:"火",name:"诺姆",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/诺姆.webp",role:"击破",tier:"S"},
+  {id:"weilinna",element:"风",name:"维琳娜",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/维琳娜.webp",role:"异常",tier:"S"},
+  {id:"peiluoyisi",element:"以太",name:"佩洛伊斯",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/佩洛伊斯.webp",role:"强攻",tier:"S"},
+  {id:"puluomiya",element:"冰",name:"普罗米娅",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/普罗米娅.webp",role:"异常",tier:"S"},
+  {id:"nangongyu",element:"以太",name:"南宫羽",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/南宫羽.webp",role:"击破",tier:"S"},
+  {id:"luxiya",element:"以太",name:"卢西娅",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/卢西娅.webp",role:"支援",tier:"S"},
+  {id:"airui",element:"以太",name:"爱芮",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/爱芮.webp",role:"异常",tier:"S"},
+  {id:"qianxia",element:"物理",name:"千夏",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/千夏.webp",role:"支援",tier:"S"},
+  {id:"yeshiguang",element:"物理",name:"叶瞬光",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/叶瞬光.webp",role:"强攻",tier:"S"},
+  {id:"zhao",element:"冰",name:"照",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/照.webp",role:"防护",tier:"S"},
+  {id:"liuyin",element:"物理",name:"琉音",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/琉音.webp",role:"击破",tier:"S"},
+  {id:"youye",element:"物理",name:"柚叶",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/柚叶.webp",role:"支援",tier:"S"},
+  {id:"bainisi",element:"火",name:"柏妮思",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/柏尼思.webp",role:"异常",tier:"S"},
+  {id:"yaojiayin",element:"以太",name:"耀佳音",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/耀佳音.webp",role:"支援",tier:"S"},
+  {id:"jian",element:"物理",name:"简",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/简.webp",role:"异常",tier:"S"},
+  {id:"laikaen",element:"冰",name:"莱卡恩",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/莱卡恩.webp",role:"击破",tier:"S"},
+  {id:"maoyou",element:"物理",name:"猫又",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/猫又.webp",role:"强攻",tier:"S"},
+  {id:"lina",element:"电",name:"丽娜",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/丽娜.webp",role:"支援",tier:"S"},
+  {id:"11hao",element:"火",name:"11号",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/11号.webp",role:"强攻",tier:"S"},
+  {id:"gelisi",element:"电",name:"格莉丝",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/格莉丝.webp",role:"异常",tier:"S"},
+  {id:"keleida",element:"火",name:"珂蕾妲",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/珂雷妲.webp",role:"击破",tier:"S"},
+  {id:"paipai",element:"物理",name:"派派",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/派派.webp",role:"异常",tier:"A"},
+  {id:"nike",element:"以太",name:"妮可",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/妮可.webp",role:"支援",tier:"A"},
+  {id:"anbi",element:"电",name:"安比",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/安比.webp",role:"击破",tier:"A"},
+  {id:"cangjiao",element:"冰",name:"苍角",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/苍角.webp",role:"支援",tier:"A"},
+  {id:"luxi",element:"火",name:"露西",img:"https://cdn.jsdelivr.net/gh/hoanlen/zzzpeiduizhushou_hoanlen@master/images/露西.webp",role:"支援",tier:"A"},
 ];
 const roleTags={"强攻":"tag-atk","击破":"tag-stun","异常":"tag-ano","支援":"tag-sup","防护":"tag-def"};
 const elemTags={冰:"tag-冰",火:"tag-火",电:"tag-电",物理:"tag-物理",以太:"tag-以太",风:"tag-风",耀变:"tag-耀变"};
