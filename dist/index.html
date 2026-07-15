@@ -435,23 +435,23 @@ const quickIds={
 
 // ===== 角色抽取建议数据库 =====
 const charAdvice={
-  xigelide:{rate:"必抽",tags:["T0","虹棱之选"],text:"诺姆队友。数值高，可能缺个专怪？要考虑一下了。诺姆和琉音最佳，莱卡恩勉强可以。"},
-  dan:{rate:"推荐",tags:["T1","虹棱之选"],text:"维琳娜队友。三异常队核心，百花齐放（除了简），适合新手。"},
-  nuomu:{rate:"必抽",tags:["T1","百花齐放"],text:"版本最强限定击破，00性价比之王。等周五前瞻再决定。"},
-  weilinna:{rate:"推荐",tags:["T1","虹棱之选","百花齐放"],text:"牛逼聚怪，牛逼伤害。和蕾米埃尔搭配最佳。"},
-  puluomiya:{rate:"可抽",tags:[],text:"异常C但配击破玩更顺手，00够用。"},
-  nangongyu:{rate:"推荐",tags:[],text:"以太击破，手感好，狼哥上位替代。"},
-  luxiya:{rate:"可抽",tags:[],text:"以太支援，通辅泛用。"},
-  airui:{rate:"可抽",tags:[],text:"以太异常C，配击破+支援玩。"},
-  qianxia:{rate:"推荐",tags:["T2"],text:"叶瞬光队友，帷幕拐很容易被打压，不算通用辅助。在3.0不会太好混，新手等风支援角色。"},
-  yeshiguang:{rate:"必抽",tags:["T1"],text:"尽量凑齐琉音+千夏/照，凑齐了玩到4.0没问题。3.0版本中期会被针对，实际不推荐。"},
-  zhao:{rate:"可抽",tags:[],text:"冰防护，特定场景对策卡。"},
-  liuyin:{rate:"可抽",tags:[],text:"物理击破，有叶瞬光才考虑。和叶瞬光一队成型能扛到4.0。"},
-  youye:{rate:"可抽",tags:[],text:"物理支援，强度在线。"},
+  xigelide:{rate:"T0",tags:["虹棱之选"],text:"诺姆队友。数值高，可能缺个专怪？要考虑一下了。诺姆和琉音最佳，莱卡恩勉强可以。"},
+  dan:{rate:"T1",tags:["虹棱之选"],text:"维琳娜队友。三异常队核心，百花齐放（除了简），适合新手。"},
+  nuomu:{rate:"T1",tags:["百花齐放"],text:"版本最强限定击破，00性价比之王。等周五前瞻再决定。"},
+  weilinna:{rate:"T1",tags:["虹棱之选","百花齐放"],text:"牛逼聚怪，牛逼伤害。和蕾米埃尔搭配最佳。"},
+  puluomiya:{rate:"T2",tags:[],text:"异常C但配击破玩更顺手，00够用。"},
+  nangongyu:{rate:"T1",tags:[],text:"以太击破，手感好，狼哥上位替代。"},
+  luxiya:{rate:"T2",tags:[],text:"以太支援，通辅泛用。"},
+  airui:{rate:"T2",tags:[],text:"以太异常C，配击破+支援玩。"},
+  qianxia:{rate:"T2",tags:[],text:"叶瞬光队友，帷幕拐很容易被打压，不算通用辅助。在3.0不会太好混，新手等风支援角色。"},
+  yeshiguang:{rate:"T1",tags:[],text:"尽量凑齐琉音+千夏/照，凑齐了玩到4.0没问题。3.0版本中期会被针对，实际不推荐。"},
+  zhao:{rate:"T2",tags:[],text:"冰防护，特定场景对策卡。"},
+  liuyin:{rate:"T2",tags:[],text:"物理击破，有叶瞬光才考虑。和叶瞬光一队成型能扛到4.0。"},
+  youye:{rate:"T2",tags:[],text:"物理支援，强度在线。"},
   bainisi:{rate:"不抽",tags:[],text:"0命不如派派，2命才值得。"},
-  yaojiayin:{rate:"可抽",tags:[],text:"以太支援，泛用性不错。"},
+  yaojiayin:{rate:"T2",tags:[],text:"以太支援，泛用性不错。"},
   jian:{rate:"不抽",tags:[],text:"旧时代角色，已跟不上版本。"},
-  peiluoyisi:{rate:"推荐",tags:[],text:"以太强攻，常驻战神，大世界开荒好用。"},
+  peiluoyisi:{rate:"T1",tags:[],text:"以太强攻，常驻战神，大世界开荒好用。"},
 };
 
 // ===== Tab 切换 =====
@@ -578,8 +578,10 @@ function renderBanners(){
     }
     const ci=info[ch.id];if(!ci)return"";
     const ad=charAdvice[ch.id];
-    const rc=ad.rate==="必抽"?"#4ade80":(ad.rate==="不抽"?"#f87171":"var(--amber)");
-    const rcl=ad.rate==="必抽"?"rgba(74,222,128,0.12)":(ad.rate==="不抽"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
+    const rateColors={"T0":"#4ade80","T1":"#fbbf24","T2":"var(--muted)","T2.5":"var(--muted)"};
+    const rateBg={"T0":"rgba(74,222,128,0.12)","T1":"rgba(245,158,11,0.12)","T2":"rgba(255,255,255,0.04)","T2.5":"rgba(255,255,255,0.04)"};
+    const rc=rateColors[ad.rate]||(ad.rate==="不抽"?"#f87171":"var(--amber)");
+    const rcl=rateBg[ad.rate]||(ad.rate==="不抽"?"rgba(248,113,113,0.12)":"rgba(245,158,11,0.12)");
     const roleTag=rt[ci.role]||"";
     return `<div class="banner-char">
       <div class="bc-version">${ch.ver}</div>
@@ -805,7 +807,8 @@ function renderTeams(teams){
       const et=elemTags[info?info.element:""]||"";
       const mc=s.main?"main":"";const sc=s.main?"":"swapable";
       const ad=info?charAdvice[info.id]:null;
-      const adCl=ad&&ad.rate==="必抽"?"#4ade80":(ad&&ad.rate==="不抽"?"#f87171":"var(--amber)");
+      const rateColors={"T0":"#4ade80","T1":"#fbbf24","T2":"var(--muted)","T2.5":"var(--muted)"};
+      const adCl=rateColors[ad?ad.rate:""]||(ad&&ad.rate==="不抽"?"#f87171":"var(--amber)");
       html+=`<div class="slot ${mc} ${sc}" data-team="${i}" data-slot="${j}" data-id="${s.id}">
         <div class="si"><img src="${info?info.img:''}" loading="lazy"></div>
         <div class="sn">${info?info.name:s.id}</div>
