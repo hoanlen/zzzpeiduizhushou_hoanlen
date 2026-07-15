@@ -530,11 +530,16 @@ function renderRecTeams(){
   let html="";
   recTeams.forEach((rt,ti)=>{
     const color=ti%2===0?"rgba(139,92,246,0.04)":"transparent";
+    // 检测这队用的是什么占位类型
+    let hasAno=false,hasSup=false;
+    rt.units.forEach(uid=>{if(uid==="ano")hasAno=true;if(uid==="sup")hasSup=true;});
     html+=`<div class="rec-card" style="background:${color}">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-        <span class="rec-tier" style="color:${rt.tier==="T0"?"#4ade80":rt.tier==="T1"?"#fbbf24":"var(--muted)"}">${rt.tier}</span>
-      </div>
-      <div class="rec-units">`;
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span class="rec-tier" style="color:${rt.tier==="T0"?"#4ade80":rt.tier==="T1"?"#fbbf24":"var(--muted)"}">${rt.tier}</span>
+          </div>
+          <div class="rec-units">`;
     rt.units.forEach((uid,si)=>{
       const u=resolveRecUnit(uid,ti,si);
       const rtg=u.role?roleTags[u.role]||"":"";
@@ -556,31 +561,38 @@ function renderRecTeams(){
       }
       if(si<rt.units.length-1)html+=`<span class="rec-plus">+</span>`;
     });
-    html+=`</div>`;
-    html+=`</div>`;
+    html+=`</div></div>`;
+    // 右侧优先级头像列表
+    if(hasAno||hasSup){
+      html+=`<div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0">`;
+      if(hasAno){
+        html+=`<div style="font-size:0.5rem;color:var(--muted);font-weight:600;margin-bottom:2px">异常</div>`;
+        anoRank.forEach((id,i)=>{
+          const ci=info[id];
+          if(!ci)return;
+          const label=["①","②","③","④","⑤"];
+          html+=`<div style="display:flex;align-items:center;gap:4px">
+            <span style="font-size:0.437rem;font-weight:700;color:var(--brand);width:10px">${label[i]||''}</span>
+            <div style="width:22px;height:22px;border-radius:50%;overflow:hidden;background:var(--border);flex-shrink:0"><img src="${ci.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>`;
+        });
+      }
+      if(hasSup){
+        html+=`<div style="font-size:0.5rem;color:var(--muted);font-weight:600;margin-bottom:2px">支援</div>`;
+        supRank.forEach((id,i)=>{
+          const ci=info[id];
+          if(!ci)return;
+          const label=["①","②","③","④","⑤"];
+          html+=`<div style="display:flex;align-items:center;gap:4px">
+            <span style="font-size:0.437rem;font-weight:700;color:var(--brand);width:10px">${label[i]||''}</span>
+            <div style="width:22px;height:22px;border-radius:50%;overflow:hidden;background:var(--border);flex-shrink:0"><img src="${ci.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          </div>`;
+        });
+      }
+      html+=`</div>`;
+    }
+    html+=`</div></div>`;
   });
-
-  // Ranking section
-  html+=`<div style="padding:14px 16px 16px">
-    <div style="font-size:0.75rem;font-weight:700;margin-bottom:8px">📊 角色优先级</div>
-    <div style="font-size:0.688rem;font-weight:600;color:var(--amber);margin-bottom:4px">异常角色</div>
-    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">`;
-  anoRank.forEach((id,i)=>{
-    const ci=info[id];
-    if(!ci)return;
-    const label=["①","②","③","④","⑤","⑥","⑦","⑧"];
-    html+=`<span style="font-size:0.562rem;padding:3px 8px;background:rgba(139,92,246,0.08);border-radius:6px;color:var(--text)"><span style="font-weight:700;color:var(--brand)">${label[i]||''}</span> ${ci.name}</span>`;
-  });
-  html+=`</div>
-    <div style="font-size:0.688rem;font-weight:600;color:var(--amber);margin-bottom:4px">支援角色</div>
-    <div style="display:flex;gap:4px;flex-wrap:wrap">`;
-  supRank.forEach((id,i)=>{
-    const ci=info[id];
-    if(!ci)return;
-    const label=["①","②","③","④","⑤","⑥","⑦","⑧"];
-    html+=`<span style="font-size:0.562rem;padding:3px 8px;background:rgba(139,92,246,0.08);border-radius:6px;color:var(--text)"><span style="font-weight:700;color:var(--brand)">${label[i]||''}</span> ${ci.name}</span>`;
-  });
-  html+=`</div></div>`;
 
   el.innerHTML=html;
 
