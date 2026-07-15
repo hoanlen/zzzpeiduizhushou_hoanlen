@@ -229,6 +229,20 @@ body{
 .tab-banner .banner-char .bc-advice{font-size:0.562rem;color:var(--muted);margin-top:1px;line-height:1.4}
 .tab-banner .banner-char .bc-rate{font-size:0.5rem;font-weight:700;flex-shrink:0;padding:2px 8px;border-radius:4px}
 
+/* Rec Teams */
+.rec-card{padding:12px 16px;border-bottom:1px solid var(--border)}
+.rec-card:last-child{border-bottom:none}
+.rec-header{margin-bottom:8px}
+.rec-tier{font-size:0.75rem;font-weight:800;letter-spacing:1px;padding:2px 10px;border-radius:4px;background:rgba(139,92,246,0.08)}
+.rec-units{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.rec-unit{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:56px}
+.rec-unit.placeholder{opacity:0.5}
+.rec-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--border)}
+.rec-avatar img{width:100%;height:100%;object-fit:cover}
+.rec-uname{font-size:0.562rem;font-weight:600;text-align:center;line-height:1.2}
+.rec-plus{font-size:0.75rem;color:var(--muted);font-weight:600;margin:0 2px}
+.rec-note{font-size:0.5rem;color:var(--muted);margin-top:4px;line-height:1.4}
+
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
   .char-card .avatar-wrap{width:42px;height:42px}
@@ -274,6 +288,7 @@ body{
   <div class="tab-bar">
     <button class="tab-btn active" data-tab="banner">📅 卡池建议</button>
     <button class="tab-btn" data-tab="team">⚔️ 配队助手</button>
+    <button class="tab-btn" data-tab="recommend">🌟 推荐配队</button>
   </div>
 
   <div class="tab-panel" id="tabTeam">
@@ -303,6 +318,16 @@ body{
 
   <div class="result" id="result"></div>
   <button class="reset-btn" id="resetBtn">清空所有选择</button>
+</div>
+
+<div class="tab-panel" id="tabRecommend">
+  <div class="banner-section">
+    <div class="banner-header">
+      <span class="bh">🌟 推荐配队</span>
+      <span class="bh-date">虹棱Hoanlen 出品</span>
+    </div>
+    <div class="banner-row" id="recContent"></div>
+  </div>
 </div>
 
 <div class="tab-panel active" id="tabBanner">
@@ -424,12 +449,14 @@ const charAdvice={
 };
 
 // ===== Tab 切换 =====
+const tabNames={banner:"Banner",team:"Team",recommend:"Recommend"};
 document.querySelectorAll(".tab-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
     document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
     btn.classList.add("active");
-    document.getElementById(`tab${btn.dataset.tab==="team"?"Team":"Banner"}`).classList.add("active");
+    const el=document.getElementById(`tab${tabNames[btn.dataset.tab]}`);
+    if(el)el.classList.add("active");
   });
 });
 const bannerChars=[
@@ -443,6 +470,90 @@ const bannerChars=[
   {id:"yeshiguang",ver:"3.0·复刻"},
   {id:"qianxia",ver:"3.0·复刻"},
 ];
+
+// ===== 推荐配队数据 =====
+const recTeams=[
+  {tier:"T0",units:["dan","weilinna","ano"],note:"异常角色选爱芮>普罗米娅"},
+  {tier:"T0",units:["xigelide","nuomu","wind_support"],note:"风支援卫星未出"},
+  {tier:"T1",units:["xigelide","nuomu","sup"],note:"支援角色选耀佳音>妮可"},
+  {tier:"T1",units:["weilinna","youye","ano"],note:"异常角色选爱芮>普罗米娅"},
+  {tier:"T1",units:["nuomu","peiluoyisi","wind_support"],note:"风支援卫星未出"},
+  {tier:"T2",units:["nuomu","peiluoyisi","sup"],note:"支援角色选耀佳音>妮可"},
+  {tier:"T1",units:["yeshiguang","liuyin","qianxia"]},
+  {tier:"T1.5",units:["yeshiguang","liuyin","zhao"]},
+  {tier:"T1.5",units:["yeshiguang","qianxia","zhao"]},
+  {tier:"T2",units:["yeshiguang","qianxia","sup"],note:"支援角色选耀佳音"},
+  {tier:"T2.5",units:["yeshiguang","zhao","sup"],note:"支援角色选耀佳音"},
+];
+
+const anoRank=["airui","puluomiya","bainisi","jian"];
+const supRank=["yaojiayin","nike","lina","luxi","cangjiao"];
+
+function resolveUnit(id){
+  if(id==="ano")return{name:"异常角色",img:"",isPlaceholder:true};
+  if(id==="sup")return{name:"支援角色",img:"",isPlaceholder:true};
+  if(id==="wind_support")return{name:"风支援卫星",img:"",isPlaceholder:true};
+  const ci=allChars.find(c=>c.id===id);
+  return ci||{name:id,img:"",isPlaceholder:true};
+}
+
+function renderRecTeams(){
+  const el=document.getElementById("recContent");
+  const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
+  let html="";
+  recTeams.forEach((rt,i)=>{
+    const color=i%2===0?"rgba(139,92,246,0.04)":"transparent";
+    html+=`<div class="rec-card" style="background:${color}">
+      <div class="rec-header"><span class="rec-tier" style="color:${rt.tier==="T0"?"#4ade80":rt.tier==="T1"?"#fbbf24":"var(--muted)"}">${rt.tier}</span></div>
+      <div class="rec-units">`;
+    rt.units.forEach((uid,j)=>{
+      const u=resolveUnit(uid);
+      const ci=info[uid];
+      const rtg=ci?roleTags[ci.role]||"":"";
+      const et=ci?elemTags[ci.element]||"":"";
+      if(u.isPlaceholder){
+        html+=`<div class="rec-unit placeholder">
+          <div class="rec-avatar" style="background:rgba(139,92,246,0.08);display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:0.562rem;font-weight:600">${u.name}</div>
+          <div class="rec-uname" style="color:var(--brand)">${u.name}</div>
+        </div>`;
+      }else{
+        html+=`<div class="rec-unit">
+          <div class="rec-avatar"><img src="${ci.img}" loading="lazy"></div>
+          <div class="rec-uname">${ci.name}</div>
+          <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center"><span class="tag ${et}" style="font-size:0.437rem;padding:1px 4px">${ci.element}</span><span class="tag ${rtg}" style="font-size:0.437rem;padding:1px 4px">${ci.role}</span></div>
+        </div>`;
+      }
+      if(j<rt.units.length-1)html+=`<span class="rec-plus">+</span>`;
+    });
+    html+=`</div>`;
+    if(rt.note)html+=`<div class="rec-note">${rt.note}</div>`;
+    html+=`</div>`;
+  });
+
+  // Add ranking section
+  html+=`<div style="padding:14px 16px 16px">
+    <div style="font-size:0.75rem;font-weight:700;margin-bottom:8px">📊 角色优先级</div>
+    <div style="font-size:0.688rem;font-weight:600;color:var(--amber);margin-bottom:4px">异常角色</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px">`;
+  anoRank.forEach((id,i)=>{
+    const ci=info[id];
+    if(!ci)return;
+    const rankLabel=["①","②","③","④","⑤","⑥","⑦","⑧"];
+    html+=`<span style="font-size:0.562rem;padding:3px 8px;background:rgba(139,92,246,0.08);border-radius:6px;color:var(--text)"><span style="font-weight:700;color:var(--brand)">${rankLabel[i]||''}</span> ${ci.name}</span>`;
+  });
+  html+=`</div>
+    <div style="font-size:0.688rem;font-weight:600;color:var(--amber);margin-bottom:4px">支援角色</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap">`;
+  supRank.forEach((id,i)=>{
+    const ci=info[id];
+    if(!ci)return;
+    const rankLabel=["①","②","③","④","⑤","⑥","⑦","⑧"];
+    html+=`<span style="font-size:0.562rem;padding:3px 8px;background:rgba(139,92,246,0.08);border-radius:6px;color:var(--text)"><span style="font-weight:700;color:var(--brand)">${rankLabel[i]||''}</span> ${ci.name}</span>`;
+  });
+  html+=`</div></div>`;
+
+  el.innerHTML=html;
+}
 
 function renderBanners(){
   const el=document.getElementById("bannerContent");
@@ -738,7 +849,7 @@ document.getElementById("cancelDps").addEventListener("click",()=>{pickedDps=[];
 document.getElementById("swapCloseBtn").addEventListener("click",()=>{document.getElementById("swapOverlay").classList.remove("show");});
 document.getElementById("quickSelectAll").addEventListener("click",()=>{quickIds.allStable.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
 document.getElementById("quickSelectCore").addEventListener("click",()=>{quickIds.starred.forEach(id=>selected.add(id));document.getElementById("countDisplay").textContent=`已选 ${selected.size} 个`;renderGrid();});
-renderFilterBar();renderGrid();renderBanners();
+renderFilterBar();renderGrid();renderBanners();renderRecTeams();
 </script>
 </body>
 </html>
