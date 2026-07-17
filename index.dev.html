@@ -259,30 +259,30 @@ body{
 .tab-banner .banner-char .bc-rate{font-size:0.5rem;font-weight:700;flex-shrink:0;padding:2px 8px;border-radius:4px}
 
 /* Rec Teams */
-.rec-card{display:flex;padding:0;border-bottom:1px solid var(--border);overflow:hidden}
+.rec-card{display:flex;padding:0;border-bottom:1px solid var(--border);overflow:hidden;min-height:54px}
 .rec-card:last-child{border-bottom:none}
-.rec-card-tier{width:44px;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;flex-shrink:0;letter-spacing:0.5px}
-.rec-card-body{flex:1;padding:8px 12px;display:flex;align-items:center}
+.rec-card-tier{width:52px;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:0.812rem;font-weight:800;flex-shrink:0;letter-spacing:0.5px}
+.rec-card-body{flex:1;padding:6px 10px;display:flex;align-items:center}
 .rec-card-divider{width:1px;background:var(--border);flex-shrink:0}
-.rec-units{display:flex;align-items:center;gap:2px;flex-wrap:nowrap;justify-content:flex-start}
-.rec-unit{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px}
+.rec-units{display:flex;align-items:center;gap:1px;flex-wrap:nowrap;justify-content:flex-start}
+.rec-unit{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:50px}
 .rec-unit.rec-focus .rec-avatar{border:2px solid var(--brand);box-shadow:0 0 12px var(--brand-glow)}
 .rec-unit.rec-focus .rec-uname{color:var(--brand)}
-.rec-avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;background:var(--border)}
+.rec-avatar{width:54px;height:54px;border-radius:50%;overflow:hidden;background:var(--border)}
 .rec-avatar img{width:100%;height:100%;object-fit:cover}
 .rec-uname{font-size:0.562rem;font-weight:600;text-align:center;line-height:1.2}
-.rec-plus{font-size:0.75rem;color:var(--muted);font-weight:600;margin:0 2px}
+.rec-plus{font-size:0.687rem;color:var(--muted);font-weight:600;margin:0 1px}
 .rec-swap{cursor:pointer;position:relative}
 .rec-swap:hover{opacity:0.8}
 .rec-swap-hint{position:absolute;top:-4px;right:-4px;font-size:0.5rem;color:var(--brand);background:var(--surface);border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center}
 /* 适配队友 - 分区样式 */
-.rec-tier-row{display:flex;min-height:44px;padding:0;margin-bottom:6px;overflow:hidden}
-.rec-tier-label{width:44px;display:flex;align-items:center;justify-content:center;font-size:0.687rem;font-weight:700;flex-shrink:0;line-height:1;letter-spacing:0.5px}
+.rec-tier-row{display:flex;min-height:54px;padding:0;margin-bottom:4px;overflow:hidden;background:rgba(255,255,255,0.02);border-radius:8px}
+.rec-tier-label{width:52px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;line-height:1;letter-spacing:0.5px}
 .rec-tier-divider{width:1px;background:var(--border);flex-shrink:0}
-.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:4px 12px;min-height:44px}
-.rec-teammate-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px}
-.rec-teammate-item .rec-avatar{width:36px;height:36px}
-.rec-teammate-name{font-size:0.5rem;color:var(--muted);text-align:center;line-height:1.2}
+.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:center;padding:4px 10px;min-height:54px}
+.rec-teammate-item{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:56px}
+.rec-teammate-item .rec-avatar{width:54px;height:54px}
+.rec-teammate-name{font-size:0.437rem;color:var(--muted);text-align:center;line-height:1.2;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rec-teammate-num{font-size:0.5rem;font-weight:700;line-height:1.4}
 .rec-picks{display:flex;flex-direction:column;gap:6px;margin-top:4px}
 .rec-picks-row{display:flex;gap:2px;flex-wrap:nowrap;align-items:center}
@@ -298,7 +298,7 @@ body{
 .rec-cs-btn .cs-img img{width:100%;height:100%;object-fit:cover}
 .rec-cs-btn .cs-name{font-size:0.5rem;font-weight:600;color:var(--muted);text-align:center;line-height:1.2}
 .rec-cs-btn.active .cs-name{color:var(--brand)}
-.rec-section-title{font-size:0.75rem;font-weight:700;color:var(--muted);margin-bottom:8px;padding:0 2px}
+.rec-section-title{font-size:0.75rem;font-weight:700;color:var(--muted);margin-bottom:6px;padding:0 2px}
 
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
@@ -748,7 +748,7 @@ function renderRecTeams(){
         html+=`<div class="rec-unit rec-swap${isFocus?' rec-focus':''}" data-oti="${oti}" data-si="${si}" data-st="${uid}">
           <div class="rec-avatar"><img src="${u.img}" loading="lazy"></div>
           <div class="rec-uname">${u.name}</div>
-          <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center"><span class="tag ${et}" style="font-size:0.437rem;padding:1px 4px">${u.element}</span><span class="tag ${rtg}" style="font-size:0.437rem;padding:1px 4px">${u.role}</span></div>
+          <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center;margin-top:1px"><span class="tag ${et}" style="font-size:0.437rem;padding:1px 4px">${u.element}</span><span class="tag ${rtg}" style="font-size:0.437rem;padding:1px 4px">${u.role}</span></div>
           <span class="rec-swap-hint">⇄</span>
         </div>`;
       }else{
@@ -756,7 +756,7 @@ function renderRecTeams(){
         html+=`<div class="rec-unit${isFocus?' rec-focus':''}">
           <div class="rec-avatar"><img src="${ci?ci.img:''}" loading="lazy"></div>
           <div class="rec-uname">${ci?ci.name:uid}</div>
-          <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center">${ci?`<span class="tag ${elemTags[ci.element]||''}" style="font-size:0.437rem;padding:1px 4px">${ci.element}</span><span class="tag ${roleTags[ci.role]||''}" style="font-size:0.437rem;padding:1px 4px">${ci.role}</span>`:''}</div>
+          <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center;margin-top:1px">${ci?`<span class="tag ${elemTags[ci.element]||''}" style="font-size:0.437rem;padding:1px 4px">${ci.element}</span><span class="tag ${roleTags[ci.role]||''}" style="font-size:0.437rem;padding:1px 4px">${ci.role}</span>`:''}</div>
         </div>`;
       }
       if(si<rt.units.length-1)html+=`<span class="rec-plus">+</span>`;
@@ -769,9 +769,9 @@ function renderRecTeams(){
 
   // ===== 适配队友板块 =====
   if(isAno||selectedRecChar==="dan"){
-    html+=`<div class="rec-section-title" style="margin-top:20px;font-size:0.687rem">📋 适配队友</div>`;
+    html+=`<div class="rec-section-title" style="margin-top:14px;font-size:0.687rem">📋 适配队友</div>`;
     // 异常子标题
-    html+=`<div style="font-size:0.562rem;font-weight:600;color:var(--muted);margin-bottom:10px;padding:0 2px">异常</div>`;
+    html+=`<div style="font-size:0.5rem;font-weight:600;color:var(--muted);margin-bottom:6px;padding:0 2px">异常</div>`;
     // 优 - 使用T0颜色(绿色)
     html+=`<div class="rec-tier-row">
       <span class="rec-tier-label" style="color:#4ade80">优</span>
