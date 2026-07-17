@@ -259,9 +259,11 @@ body{
 .tab-banner .banner-char .bc-rate{font-size:0.5rem;font-weight:700;flex-shrink:0;padding:2px 8px;border-radius:4px}
 
 /* Rec Teams */
-.rec-card{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border)}
+.rec-card{display:flex;padding:0;border-bottom:1px solid var(--border);overflow:hidden}
 .rec-card:last-child{border-bottom:none}
-.rec-tier-badge{min-width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:2.5px solid;border-radius:10px;font-size:0.812rem;font-weight:800;flex-shrink:0;background:rgba(0,0,0,0.25);letter-spacing:1px}
+.rec-card-tier{width:44px;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;flex-shrink:0;letter-spacing:0.5px}
+.rec-card-body{flex:1;padding:8px 12px;display:flex;align-items:center}
+.rec-card-divider{width:1px;background:var(--border);flex-shrink:0}
 .rec-units{display:flex;align-items:center;gap:2px;flex-wrap:nowrap;justify-content:flex-start}
 .rec-unit{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:48px}
 .rec-unit.rec-focus .rec-avatar{border:2px solid var(--brand);box-shadow:0 0 12px var(--brand-glow)}
@@ -274,9 +276,10 @@ body{
 .rec-swap:hover{opacity:0.8}
 .rec-swap-hint{position:absolute;top:-4px;right:-4px;font-size:0.5rem;color:var(--brand);background:var(--surface);border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center}
 /* 适配队友 - 分区样式 */
-.rec-tier-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
-.rec-tier-label{min-width:36px;height:36px;display:flex;align-items:center;justify-content:center;border:2px solid;border-radius:8px;font-size:0.687rem;font-weight:700;flex-shrink:0;background:rgba(0,0,0,0.25);letter-spacing:0.5px;line-height:1}
-.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.rec-tier-row{display:flex;min-height:44px;padding:0;margin-bottom:6px;overflow:hidden}
+.rec-tier-label{width:44px;display:flex;align-items:center;justify-content:center;font-size:0.687rem;font-weight:700;flex-shrink:0;line-height:1;letter-spacing:0.5px}
+.rec-tier-divider{width:1px;background:var(--border);flex-shrink:0}
+.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:4px 12px;min-height:44px}
 .rec-teammate-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px}
 .rec-teammate-item .rec-avatar{width:36px;height:36px}
 .rec-teammate-name{font-size:0.5rem;color:var(--muted);text-align:center;line-height:1.2}
@@ -721,8 +724,9 @@ function renderRecTeams(){
     rt.units.forEach(uid=>{if(uid==="ano")hasAno=true;if(uid==="sup")hasSup=true;});
 
     html+=`<div class="rec-card" style="background:${bgColor}">
-      <div class="rec-tier-badge" style="border-color:${tColor};color:${tColor}">${rt.tier}</div>
-      <div class="rec-units">`;
+      <div class="rec-card-tier" style="color:${tColor}">${rt.tier}</div>
+      <div class="rec-card-divider"></div>
+      <div class="rec-card-body"><div class="rec-units">`;
     const resolvedCells=rt.units.map((uid,si)=>resolveRecUnit(uid,oti,si));
     // T2 蕾米埃尔双异常格不重复
     if(selectedRecChar==="dan"&&rt.units.filter(u=>u==="ano").length>=2){
@@ -757,7 +761,7 @@ function renderRecTeams(){
       }
       if(si<rt.units.length-1)html+=`<span class="rec-plus">+</span>`;
     });
-    html+=`</div></div>`;
+    html+=`</div></div></div>`;
     if(rt.note&&!hasAno&&!hasSup){
       html+=`<div style="font-size:0.5rem;color:#fbbf24;font-weight:700;line-height:1.5;background:rgba(251,191,36,0.08);padding:6px 8px;border-radius:6px">${rt.note}</div>`;
     }
@@ -770,7 +774,8 @@ function renderRecTeams(){
     html+=`<div style="font-size:0.562rem;font-weight:600;color:var(--muted);margin-bottom:10px;padding:0 2px">异常</div>`;
     // 优 - 使用T0颜色(绿色)
     html+=`<div class="rec-tier-row">
-      <span class="rec-tier-label" style="color:#4ade80;background:rgba(74,222,128,0.12)">优</span>
+      <span class="rec-tier-label" style="color:#4ade80">优</span>
+      <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
     const yNum=["①","②"];
     anoRankTiers.you.chars.forEach((cid,i)=>{
@@ -784,7 +789,8 @@ function renderRecTeams(){
     html+=`</div></div>`;
     // 良 - 使用T1颜色(黄色)
     html+=`<div class="rec-tier-row">
-      <span class="rec-tier-label" style="color:#fbbf24;background:rgba(251,191,36,0.12)">良</span>
+      <span class="rec-tier-label" style="color:#fbbf24">良</span>
+      <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
     const lNum=["①","②","③","④","⑤","⑥","⑦","⑧"];
     anoRankTiers.liang.chars.forEach((cid,i)=>{
@@ -798,7 +804,8 @@ function renderRecTeams(){
     html+=`</div></div>`;
     // 平 - 使用T2颜色(灰色)
     html+=`<div class="rec-tier-row">
-      <span class="rec-tier-label" style="color:var(--muted);background:rgba(255,255,255,0.04)">平</span>
+      <span class="rec-tier-label" style="color:var(--muted)">平</span>
+      <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
     const pNum=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬"];
     anoRankTiers.ping.chars.forEach((cid,i)=>{
