@@ -601,12 +601,19 @@ const bannerChars=[
 
 // ===== 推荐配队数据 =====
 const recTeams=[
+  // 蕾米埃尔
   {tier:"T0",units:["dan","weilinna","feioumi"]},
+  {tier:"T1",units:["dan","weilinna","ano"]},
+  {tier:"T2",units:["dan","ano","ano"]},
+  // 希格莉德
   {tier:"T0",units:["xigelide","nuomu","luokexi"]},
   {tier:"T1",units:["xigelide","nuomu","sup"]},
-  {tier:"T1",units:["weilinna","youye","ano"]},
+  // 维琳娜
+  {tier:"T1",units:["weilinna","youye","ano"],excludeChar:["dan"]},
+  // 诺姆
   {tier:"T1",units:["nuomu","peiluoyisi","luokexi"]},
   {tier:"T2",units:["nuomu","peiluoyisi","sup"]},
+  // 叶瞬光
   {tier:"T1",units:["yeshiguang","liuyin","qianxia"]},
   {tier:"T1.5",units:["yeshiguang","liuyin","zhao"]},
   {tier:"T1.5",units:["yeshiguang","qianxia","zhao"]},
@@ -614,7 +621,7 @@ const recTeams=[
   {tier:"T2.5",units:["yeshiguang","zhao","sup"]},
 ];
 
-const anoRank=["airui","puluomiya","bainisi","jian"];
+const anoRank=["weilinna","puluomiya","airui","ailisi","weiweian","ya","liu","bainisi","jian","gelisi","paipai"];
 const supRank=["yaojiayin","nike","lina","luxi","cangjiao"];
 
 // Default selected for each team's placeholders: {teamIndex_{slot}: currentIndex }
@@ -669,6 +676,7 @@ function renderRecTeams(){
   const isAno=ci2&&ci2.role==="异常";
   const isSup=ci2&&ci2.role==="支援";
   filtered=recTeams.filter(rt=>{
+    if(rt.excludeChar&&rt.excludeChar.includes(selectedRecChar))return false;
     if(rt.units.includes(selectedRecChar))return true;
     if(isAno&&rt.units.includes("ano"))return true;
     if(isSup&&rt.units.includes("sup"))return true;
@@ -730,8 +738,8 @@ function renderRecTeams(){
         html+=`<div style="font-size:0.5rem;color:var(--muted);font-weight:600">异常</div><div class="rec-picks-row">`;
         anoRank.forEach((id,i)=>{
           const ci2=info[id];if(!ci2)return;
-          const label=["①","②","③","④","⑤","⑥"];
-          html+=`<div class="rec-picks-item"><span style="font-size:0.437rem;font-weight:700;color:var(--brand)">${label[i]||''}</span><div class="rec-picks-avatar"><img src="${ci2.img}" style="width:100%;height:100%;object-fit:cover"></div></div>`;
+          const label=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬","⑭","⑮"];
+          html+=`<div class="rec-picks-item"><span style="font-size:0.437rem;font-weight:700;color:var(--brand)">${label[i]||(i+1)}</span><div class="rec-picks-avatar"><img src="${ci2.img}" style="width:100%;height:100%;object-fit:cover"></div></div>`;
         });
         html+=`</div>`;
       }
@@ -751,6 +759,23 @@ function renderRecTeams(){
     }
     html+=`</div>`;
   });
+
+  // ===== 异常备选角色池（独立预览区域） =====
+  if(isAno||selectedRecChar==="dan"){
+    html+=`<div class="rec-section-title" style="margin-top:16px;font-size:0.5rem;color:var(--muted);font-weight:600">📋 异常队友备选池（点击←→可切换）</div>`;
+    html+=`<div class="rec-picks" style="margin-top:6px">`;
+    html+=`<div class="rec-picks-row">`;
+    const allLabels=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬","⑭","⑮"];
+    anoRank.forEach((id,i)=>{
+      const ci=info[id];if(!ci)return;
+      html+=`<div class="rec-picks-item" title="${ci.name}">
+        <span style="font-size:0.437rem;font-weight:700;color:var(--brand)">${allLabels[i]||(i+1)}</span>
+        <div class="rec-picks-avatar"><img src="${ci.img}" style="width:100%;height:100%;object-fit:cover"></div>
+        <span style="font-size:0.375rem;color:var(--muted);text-align:center;margin-top:2px">${ci.name}</span>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  }
 
   el.innerHTML=html;
 
