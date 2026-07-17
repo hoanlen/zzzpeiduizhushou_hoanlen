@@ -707,13 +707,26 @@ function renderRecTeams(){
         <span class="rec-tier" style="color:${rt.tier==="T0"?"#4ade80":rt.tier==="T1"?"#fbbf24":"var(--muted)"}">${rt.tier}</span>
       </div>
       <div class="rec-units">`;
-    rt.units.forEach((uid,si)=>{
-      const u=resolveRecUnit(uid,oti,si);
+    // 先解析所有格子，做去重检查
+    const resolvedCells=rt.units.map((uid,si)=>resolveRecUnit(uid,oti,si));
+    // T2 蕾米埃尔双异常格不能重复
+    if(selectedRecChar==="dan"&&rt.units.filter(u=>u==="ano").length>=2){
+      const anoSids=rt.units.map((u,i)=>u==="ano"?i:-1).filter(i=>i>=0);
+      const id0=resolvedCells[anoSids[0]].id;
+      const id1=resolvedCells[anoSids[1]].id;
+      if(id0&&id0===id1){
+        const key=getRecKey(oti,anoSids[1]);
+        recState[key]=((recState[key]||0)+1)%anoRank.length;
+        resolvedCells[anoSids[1]]=resolveRecUnit("ano",oti,anoSids[1]);
+      }
+    }
+    resolvedCells.forEach((u,si)=>{
+      const uid=rt.units[si];
       const rtg=u.role?roleTags[u.role]||"":"";
       const et=u.element?elemTags[u.element]||"":"";
       const isFocus=uid===selectedRecChar||u.id===selectedRecChar;
       if(u.isSwitchable){
-        html+=`<div class="rec-unit rec-swap${isFocus?' rec-focus':''}" data-ti="${ti}" data-oti="${oti}" data-si="${si}" data-st="${uid}">
+        html+=`<div class="rec-unit rec-swap${isFocus?' rec-focus':''}" data-oti="${oti}" data-si="${si}" data-st="${uid}">
           <div class="rec-avatar"><img src="${u.img}" loading="lazy"></div>
           <div class="rec-uname">${u.name}</div>
           <div style="display:flex;gap:2px;flex-wrap:wrap;justify-content:center"><span class="tag ${et}" style="font-size:0.437rem;padding:1px 4px">${u.element}</span><span class="tag ${rtg}" style="font-size:0.437rem;padding:1px 4px">${u.role}</span></div>
@@ -760,21 +773,20 @@ function renderRecTeams(){
     html+=`</div>`;
   });
 
-  // ===== 异常备选角色池（独立预览区域） =====
+  // ===== 异常队友预览区域 =====
   if(isAno||selectedRecChar==="dan"){
-    html+=`<div class="rec-section-title" style="margin-top:16px;font-size:0.5rem;color:var(--muted);font-weight:600">📋 异常队友备选池（点击←→可切换）</div>`;
-    html+=`<div class="rec-picks" style="margin-top:6px">`;
-    html+=`<div class="rec-picks-row">`;
+    html+=`<div class="rec-section-title" style="margin-top:16px;font-size:0.5rem;color:var(--muted);font-weight:600">📋 异常队友</div>`;
+    html+=`<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start;margin-top:6px">`;
     const allLabels=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬","⑭","⑮"];
     anoRank.forEach((id,i)=>{
       const ci=info[id];if(!ci)return;
-      html+=`<div class="rec-picks-item" title="${ci.name}">
-        <span style="font-size:0.437rem;font-weight:700;color:var(--brand)">${allLabels[i]||(i+1)}</span>
-        <div class="rec-picks-avatar"><img src="${ci.img}" style="width:100%;height:100%;object-fit:cover"></div>
-        <span style="font-size:0.375rem;color:var(--muted);text-align:center;margin-top:2px">${ci.name}</span>
+      html+=`<div style="display:flex;flex-direction:column;align-items:center;gap:2px;min-width:48px" title="${ci.name}">
+        <span style="font-size:0.5rem;font-weight:700;color:var(--brand)">${allLabels[i]||(i+1)}</span>
+        <div class="rec-avatar"><img src="${ci.img}" style="width:100%;height:100%;object-fit:cover"></div>
+        <span style="font-size:0.5rem;color:var(--muted);text-align:center;line-height:1.2">${ci.name}</span>
       </div>`;
     });
-    html+=`</div></div>`;
+    html+=`</div>`;
   }
 
   el.innerHTML=html;
