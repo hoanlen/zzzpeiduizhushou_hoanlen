@@ -262,10 +262,10 @@ body{
 .rec-card{display:flex;padding:0;border-bottom:1px solid var(--border);overflow:hidden;min-height:54px}
 .rec-card:last-child{border-bottom:none}
 .rec-card-tier{width:52px;min-height:56px;display:flex;align-items:center;justify-content:center;font-size:0.812rem;font-weight:800;flex-shrink:0;letter-spacing:0.5px}
-.rec-card-body{flex:1;padding:6px 10px;display:flex;align-items:center}
+.rec-card-body{flex:1;padding:6px 8px;display:flex;align-items:center}
 .rec-card-divider{width:1px;background:var(--border);flex-shrink:0}
 .rec-units{display:flex;align-items:center;gap:1px;flex-wrap:nowrap;justify-content:flex-start}
-.rec-unit{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:50px}
+.rec-unit{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:46px}
 .rec-unit.rec-focus .rec-avatar{border:2px solid var(--brand);box-shadow:0 0 12px var(--brand-glow)}
 .rec-unit.rec-focus .rec-uname{color:var(--brand)}
 .rec-avatar{width:54px;height:54px;border-radius:50%;overflow:hidden;background:var(--border)}
@@ -279,8 +279,8 @@ body{
 .rec-tier-row{display:flex;min-height:54px;padding:0;margin-bottom:4px;overflow:hidden;background:rgba(255,255,255,0.02);border-radius:8px}
 .rec-tier-label{width:52px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;line-height:1;letter-spacing:0.5px}
 .rec-tier-divider{width:1px;background:var(--border);flex-shrink:0}
-.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:center;padding:4px 10px;min-height:54px}
-.rec-teammate-item{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:56px}
+.rec-tier-row-content{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:4px 8px;min-height:56px}
+.rec-teammate-item{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:52px}
 .rec-teammate-item .rec-avatar{width:54px;height:54px}
 .rec-teammate-name{font-size:0.437rem;color:var(--muted);text-align:center;line-height:1.2;max-width:54px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rec-teammate-num{font-size:0.5rem;font-weight:700;line-height:1.4}
@@ -298,7 +298,7 @@ body{
 .rec-cs-btn .cs-img img{width:100%;height:100%;object-fit:cover}
 .rec-cs-btn .cs-name{font-size:0.5rem;font-weight:600;color:var(--muted);text-align:center;line-height:1.2}
 .rec-cs-btn.active .cs-name{color:var(--brand)}
-.rec-section-title{font-size:0.75rem;font-weight:700;color:var(--muted);margin-bottom:6px;padding:0 2px}
+.rec-section-title{font-size:0.75rem;font-weight:700;color:var(--muted);margin-bottom:6px;padding:0}
 
 @media(max-width:380px){
   .char-grid{grid-template-columns:repeat(3,1fr);gap:6px}
@@ -669,6 +669,8 @@ function resolveRecUnit(uid,ti,si){
   return ci||{id:uid,name:uid,img:"",isPlaceholder:true};
 }
 
+
+function chunk4(arr){var r=[];for(var i=0;i<arr.length;i+=4)r.push(arr.slice(i,i+4));return r}
 function renderRecTeams(){
   const el=document.getElementById("recContent");
   const info=allChars.reduce((m,c)=>{m[c.id]=c;return m},{});
@@ -777,46 +779,58 @@ function renderRecTeams(){
       <span class="rec-tier-label" style="color:#4ade80">优</span>
       <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
-    const yNum=["①","②"];
-    anoRankTiers.you.chars.forEach((cid,i)=>{
-      const ci3=info[cid];if(!ci3)return;
-      html+=`<div class="rec-teammate-item">
-        <span class="rec-teammate-num" style="color:#4ade80">${yNum[i]||(i+1)}</span>
-        <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
-        <span class="rec-teammate-name">${ci3.name}</span>
-      </div>`;
+    const yGroups=chunk4(anoRankTiers.you.chars);
+    yGroups.forEach((grp,gi)=>{
+      if(gi>0)html+=`<div class="rec-tier-row" style="margin-top:0;min-height:auto;background:none;border-radius:0;margin-bottom:0"><span class="rec-tier-label" style="visibility:hidden">优</span><div class="rec-tier-divider"></div><div class="rec-tier-row-content">`;
+      const yNum=["①","②","③","④","⑤","⑥","⑦","⑧"];
+      grp.forEach((cid,i)=>{
+        const ci3=info[cid];if(!ci3)return;
+        html+=`<div class="rec-teammate-item">
+          <span class="rec-teammate-num" style="color:#4ade80">${yNum[i]||(i+1)}</span>
+          <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          <span class="rec-teammate-name">${ci3.name}</span>
+        </div>`;
+      });
+      html+=`</div></div>`;
     });
-    html+=`</div></div>`;
     // 良 - 使用T1颜色(黄色)
     html+=`<div class="rec-tier-row">
       <span class="rec-tier-label" style="color:#fbbf24">良</span>
       <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
-    const lNum=["①","②","③","④","⑤","⑥","⑦","⑧"];
-    anoRankTiers.liang.chars.forEach((cid,i)=>{
-      const ci3=info[cid];if(!ci3)return;
-      html+=`<div class="rec-teammate-item">
-        <span class="rec-teammate-num" style="color:#fbbf24">${lNum[i]||(i+1)}</span>
-        <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
-        <span class="rec-teammate-name">${ci3.name}</span>
-      </div>`;
+    const lGroups=chunk4(anoRankTiers.liang.chars);
+    lGroups.forEach((grp,gi)=>{
+      if(gi>0)html+=`<div class="rec-tier-row" style="margin-top:0;min-height:auto;background:none;border-radius:0;margin-bottom:0"><span class="rec-tier-label" style="visibility:hidden">良</span><div class="rec-tier-divider"></div><div class="rec-tier-row-content">`;
+      const lNum=["①","②","③","④","⑤","⑥","⑦","⑧"];
+      grp.forEach((cid,i)=>{
+        const ci3=info[cid];if(!ci3)return;
+        html+=`<div class="rec-teammate-item">
+          <span class="rec-teammate-num" style="color:#fbbf24">${lNum[i]||(i+1)}</span>
+          <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          <span class="rec-teammate-name">${ci3.name}</span>
+        </div>`;
+      });
+      html+=`</div></div>`;
     });
-    html+=`</div></div>`;
     // 平 - 使用T2颜色(灰色)
     html+=`<div class="rec-tier-row">
       <span class="rec-tier-label" style="color:var(--muted)">平</span>
       <div class="rec-tier-divider"></div>
       <div class="rec-tier-row-content">`;
-    const pNum=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬"];
-    anoRankTiers.ping.chars.forEach((cid,i)=>{
-      const ci3=info[cid];if(!ci3)return;
-      html+=`<div class="rec-teammate-item">
-        <span class="rec-teammate-num" style="color:var(--muted)">${pNum[i]||(i+1)}</span>
-        <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
-        <span class="rec-teammate-name">${ci3.name}</span>
-      </div>`;
+    const pGroups=chunk4(anoRankTiers.ping.chars);
+    pGroups.forEach((grp,gi)=>{
+      if(gi>0)html+=`<div class="rec-tier-row" style="margin-top:0;min-height:auto;background:none;border-radius:0;margin-bottom:4px"><span class="rec-tier-label" style="visibility:hidden">平</span><div class="rec-tier-divider"></div><div class="rec-tier-row-content">`;
+      const pNum=["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩","⑪","⑫","⑬"];
+      grp.forEach((cid,i)=>{
+        const ci3=info[cid];if(!ci3)return;
+        html+=`<div class="rec-teammate-item">
+          <span class="rec-teammate-num" style="color:var(--muted)">${pNum[i]||(i+1)}</span>
+          <div class="rec-avatar"><img src="${ci3.img}" style="width:100%;height:100%;object-fit:cover"></div>
+          <span class="rec-teammate-name">${ci3.name}</span>
+        </div>`;
+      });
+      html+=`</div></div>`;
     });
-    html+=`</div></div>`;
   }
 
   el.innerHTML=html;
