@@ -714,7 +714,7 @@ function renderRecTeams(){
   // ===== 渲染配队 =====
   filtered.forEach((rt,ti)=>{
     const oti=recTeams.indexOf(rt);
-    const tierColors={T0:"#4ade80",T1:"#fbbf24",T1.5:"#f97316",T2:"var(--muted)",T2.5:"var(--muted)"};
+    const tierColors={T0:"#4ade80",T1:"#fbbf24","T1.5":"#f97316",T2:"var(--muted)","T2.5":"var(--muted)"};
     const tColor=tierColors[rt.tier]||"var(--muted)";
     const bgColor=ti%2===0?"rgba(139,92,246,0.04)":"transparent";
     let hasAno=false,hasSup=false;
